@@ -1,7 +1,7 @@
-import CourseTeacher from "../component/teacherDetails/courseTeacher/CourseTeacher";
-import InfoAboutTeacher from "../component/teacherDetails/infoAboutTeacher/InfoAboutTeacher";
-import RatingTeacher from "../component/teacherDetails/ratingTeacher/RatingTeacher";
-import "../component/teacherDetails/TeacherDetails.scss";
+import CourseTeacher from "../components/teacherDetails/courseTeacher/CourseTeacher";
+import InfoAboutTeacher from "../components/teacherDetails/infoAboutTeacher/InfoAboutTeacher";
+import RatingTeacher from "../components/teacherDetails/ratingTeacher/RatingTeacher";
+import "../components/teacherDetails/TeacherDetails.scss";
 
 function TeacherDetails() {
   return (

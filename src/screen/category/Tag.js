@@ -1,7 +1,7 @@
 import React from "react";
 import "./category.scss";
-import TagHeader from "../../component/tags/TagHeader";
-import TagBody from "../../component/tags/TagBody";
+import TagHeader from "../../components/tags/TagHeader";
+import TagBody from "../../components/tags/TagBody";
 
 export default function Tag() {
   return (

@@ -10,16 +10,12 @@ export const getHomeList = () => async (dispatch) => {
     type: HOME_LIST_REQUEST,
   });
   try {
-    const bestSalesCourses = await getData("topCourse");
-    const newCourses = await getData("newCourse");
-    const featuredTeachers = await getData("topTeacher");
+    const courses = await getData("course");
 
     dispatch({
       type: HOME_LIST_SUCCESS,
       payload: {
-        bestSalesCourses: [...bestSalesCourses],
-        newCourses: [...newCourses],
-        featuredTeachers: [...featuredTeachers],
+        courses: [...courses],
       },
     });
   } catch (error) {

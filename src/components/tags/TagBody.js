@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import CourseItem from "../../component/course/CourseItem";
+import CourseItem from "../../components/course/CourseItem";
 import { getTagList } from "../../redux/actions/tagActions";
 
 export default function TagBody() {
@@ -13,22 +13,25 @@ export default function TagBody() {
     dispatch(getTagList(id, 1));
   }, [dispatch, id]);
 
-  const handleLoadMore = () => { };
+  const handleLoadMore = () => {};
 
   return (
     <>
       {data && (
         <div>
           <div className="row row-cols-1 row-cols-md-4 g-4">
-          {data.listCourse.map((item, index) => (
-            <CourseItem key={index} course={item} />
-          ))}
+            {data.listCourse.map((item, index) => (
+              <CourseItem key={index} course={item} />
+            ))}
+          </div>
+          <button
+            className="btn-loadMore"
+            onClick={handleLoadMore}
+            style={{ display: "block" }}
+          >
+            Xem tiếp
+          </button>
         </div>
-        <button className="btn-loadMore" onClick={handleLoadMore} style={{ display: 'block' }}>
-              Xem tiếp
-            </button>
-        </div>
-
       )}
     </>
   );

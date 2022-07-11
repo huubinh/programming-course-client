@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../component/cart/cart.scss";
-import CartItem from "../component/cart/CartItem";
+import "../components/cart/cart.scss";
+import CartItem from "../components/cart/CartItem";
 // fake data
 import { cart } from "../data/dynamic/cart";
 

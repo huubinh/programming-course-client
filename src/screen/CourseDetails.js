@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import BannerCourse from "../component/courseDetails/banner/BannerCourse";
-import CardBuyCourse from "../component/courseDetails/cardBuyCourse/CardBuyCourse";
-import CourseInfo from "../component/courseDetails/courseInfo/CourseInfo";
+import BannerCourse from "../components/courseDetails/banner/BannerCourse";
+import CardBuyCourse from "../components/courseDetails/cardBuyCourse/CardBuyCourse";
+import CourseInfo from "../components/courseDetails/courseInfo/CourseInfo";
 import { getCourseDetailTrial } from "../redux/actions/courseAction";
-import LoadingPage from "../component/Loading/Loading";
+import LoadingPage from "../components/Loading/Loading";
 
 export default function CourseDetails() {
   const dispatch = useDispatch();

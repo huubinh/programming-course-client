@@ -1,8 +1,8 @@
 import React from "react";
 import { Nav, Tab } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import UserCourse from "../../component/user/usercourse/UserCourse";
-import UserProfile from "../../component/user/userprofile/UserProfile";
+import UserCourse from "../../components/user/usercourse/UserCourse";
+import UserProfile from "../../components/user/userprofile/UserProfile";
 import "./user.scss";
 
 export default function User() {

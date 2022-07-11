@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Tab } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import UserProfile from "../../component/user/userprofile/UserProfile";
+import UserProfile from "../../components/user/userprofile/UserProfile";
 import "./user.scss";
 
 export default function UserProfileScreen() {

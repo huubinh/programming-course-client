@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import CourseItem from "../../component/course/CourseItem";
+import CourseItem from "../../components/course/CourseItem";
 import { getCategoryList } from "../../redux/actions/categoryActions";
 
 export default function CategoryBody() {

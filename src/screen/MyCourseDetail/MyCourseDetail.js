@@ -3,9 +3,9 @@ import { Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getUserCourseDetail } from "../../redux/actions/userActions";
-import LoadingPage from "../../component/Loading/Loading";
+import LoadingPage from "../../components/Loading/Loading";
 import "./mycoursedetail.scss";
-import LessonDetail from "../../component/LessonDetail";
+import LessonDetail from "../../components/LessonDetail";
 export default function MyCourseDetail() {
   const dispatch = useDispatch();
   const userCourseDetail = useSelector((state) => state.userCourseDetail);

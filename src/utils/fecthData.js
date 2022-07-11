@@ -1,19 +1,20 @@
 import axios from "axios";
 
-const apiUrl = "http://127.0.0.1:8000";
+const apiUrl = "https://programming-course-server.herokuapp.com/v1";
 
 export const getData = async (url, token) => {
-  const res = await axios.get(`${apiUrl}/api/${url}`, {
+  const res = await axios.get(`${apiUrl}/${url}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  const data = res.data;
+  // console.log(res);
+  const data = res.data.results;
   return data;
 };
 
 export const postData = async (url, post, token) => {
-  const res = await axios.post(`${apiUrl}/api/${url}`, post, {
+  const res = await axios.post(`${apiUrl}/${url}`, post, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -25,7 +26,7 @@ export const postData = async (url, post, token) => {
 };
 
 export const putData = async (url, post, token) => {
-  const res = await axios.put(`${apiUrl}/api/${url}`, post, {
+  const res = await axios.put(`${apiUrl}/${url}`, post, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -37,7 +38,7 @@ export const putData = async (url, post, token) => {
 };
 
 export const patchData = async (url, post, token) => {
-  const res = await fetch(`${apiUrl}/api/${url}`, {
+  const res = await fetch(`${apiUrl}/${url}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -51,7 +52,7 @@ export const patchData = async (url, post, token) => {
 };
 
 export const deleteData = async (url, token) => {
-  const res = await fetch(`${apiUrl}/api/${url}`, {
+  const res = await fetch(`${apiUrl}/${url}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

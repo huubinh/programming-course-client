@@ -1,7 +1,7 @@
 import React from "react";
 import "./category.scss";
-import CategoryHeader from "../../component/category/CategoryHeader";
-import CategoryBody from "../../component/category/CategoryBody";
+import CategoryHeader from "../../components/category/CategoryHeader";
+import CategoryBody from "../../components/category/CategoryBody";
 
 export default function Category({ props }) {
   return (

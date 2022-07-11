@@ -1,9 +1,8 @@
-import Home from "./component/home/Home";
-import CourseDetails from "./component/courseDetails/CourseDetails";
-import Category from "./component/category/Category";
+import Home from "./components/home/Home";
+import CourseDetails from "./components/courseDetails/CourseDetails";
+import Category from "./components/category/Category";
 
 export const routers = [
-  
   {
     path: "/",
     label: "courses-details",
@@ -23,7 +22,6 @@ export const routers = [
     label: "",
     main: () => {
       <Category />;
-    }
-  }
+    },
+  },
 ];
-

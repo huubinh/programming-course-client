@@ -1,6 +1,6 @@
 import { Component } from "react";
-import Footer from "./component/layout/footer/Footer";
-import Header from "./component/layout/header/Header";
+import Footer from "./components/layout/footer/Footer";
+import Header from "./components/layout/header/Header";
 import Home from "./screen/Home";
 import TeacherDetails from "./screen/TeacherDetails";
 import CourseDetails from "./screen/CourseDetails";

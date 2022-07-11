@@ -1,5 +1,5 @@
 import React from "react";
-import LoadingPage from "../component/Loading/Loading";
+import LoadingPage from "../components/Loading/Loading";
 
 export default function Test() {
   return (
