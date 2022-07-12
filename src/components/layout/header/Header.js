@@ -20,24 +20,12 @@ export default function Header() {
         <div className="header-wrapper">
           <div className="logo-brand">
             <Link to="/">
-              <img src="https://unica.vn/media/img/logo-unica.svg" alt="" />
+              <img
+                src="https://cdn-icons.flaticon.com/png/512/2888/premium/2888414.png?token=exp=1657596224~hmac=6311dba77e1bee83aad7985800059c9e"
+                alt="logo"
+              />
+              <span>XCODE</span>
             </Link>
-          </div>
-          <div className="search-form">
-            <form className="d-flex">
-              <div className="wrap">
-                <div className="search">
-                  <input
-                    type="text"
-                    className="searchTerm"
-                    placeholder="Tìm khóa học, giáo viên"
-                  />
-                  <button type="submit" className="searchButton">
-                    <i className="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
           </div>
 
           {userInfo !== null ? (
@@ -50,13 +38,10 @@ export default function Header() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link to="/user/profile">Tài khoản của tôi</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to="/user/my-course">Khóa học của tôi</Link>
+                    <Link to="/user/profile">プロフィール</Link>
                   </Dropdown.Item>
                   <Dropdown.Item onClick={signoutHandler}>
-                    Đăng xuất
+                    サインアウト
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -64,10 +49,10 @@ export default function Header() {
           ) : (
             <div className="nav-user-action">
               <Link to="./login" className="btn btn-login">
-                Đăng nhập
+                サインイン
               </Link>
               <Link to="./register" className="btn btn-register">
-                Đăng ký
+                サインアップ
               </Link>
             </div>
           )}
