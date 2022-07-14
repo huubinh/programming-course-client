@@ -56,6 +56,16 @@ export default function Home() {
                   placeholder="キーワード検索"
                   value={searchName}
                   onChange={(e) => setSearchName(e.target.value)}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      dispatch(
+                        getHomeList({
+                          name: searchName,
+                          category: searchCategory,
+                        })
+                      );
+                    }
+                  }}
                   style={{ width: "268px" }}
                 />
 
