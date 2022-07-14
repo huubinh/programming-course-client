@@ -2,29 +2,28 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { register ,verify} from "../../redux/actions/userActions";
+import { register, verify } from "../../redux/actions/userActions";
 import "./register.scss";
 
 export default function Register() {
   const initialState = {
     email: "",
     name: "",
-   
-    
+
     password: "",
-  
+
     cf_password: "",
   };
   const [userData, setUserData] = useState(initialState);
-  const { email,name,  password, cf_password} = userData;
+  const { email, name, password, cf_password } = userData;
 
   const userRegister = useSelector((state) => state.userRegister);
   const { success } = userRegister;
 
   const userVery = useSelector((state) => state.userVerify);
-  const {verifySuccess} = userVery;
+  const { verifySuccess } = userVery;
   const dispatch = useDispatch();
- 
+
   const navigate = useNavigate();
 
   const [verife, setVerify] = useState(false);
@@ -36,14 +35,8 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === cf_password) {
-      if (
-        name !== null &&
-       
-        email !== null &&
-        password !== null 
-       
-      ) {
-        dispatch(register({ name,email,  password }));
+      if (name !== null && email !== null && password !== null) {
+        dispatch(register({ name, email, password }));
       }
     }
   };
@@ -51,12 +44,12 @@ export default function Register() {
   const handleInputVery = (e) => {
     console.log("data: ", e.target.value);
     setCode(e.target.value);
-};
-const handleSubmitVery = (e)=>{
+  };
+  const handleSubmitVery = (e) => {
     e.preventDefault();
-  console.log("submit: ",email, code);
-  dispatch(verify(email, code));
-}
+    console.log("submit: ", email, code);
+    dispatch(verify(email, code));
+  };
 
   // useEffect(() => {
   //   console.log("vao r ma");
@@ -85,102 +78,102 @@ const handleSubmitVery = (e)=>{
   }, [navigate, verifySuccess]);
 
   return (
-   <div>
-    
-    {verife ? (
-      <form className="wrap-form" >
-      <h3>Vui long nhap ma xac nhan</h3>
-      <div className="mb-3">
-      <input
-            type="password"
-            className="form-control"
-            placeholder="Nhập code"
-            name="text"
-            onChange={handleInputVery}
-      />
-      </div>
-      <div className="mb-3 pt-4">
-      <button className="btn-account-submit" onClick={handleSubmitVery}>
-            xac nhan
-      </button>
-      </div>
-      
-      
-      </form>
-    )
-    :(
-      <div className="account-form">
-        <div className="text-center mb-3">
-          <span className="">
-            <Link to="/">
-              <img src="https://id.unica.vn/images/logo.png" alt="logo" />
-            </Link>
-          </span>
-        </div>
-
-        <form className="wrap-form" onSubmit={handleSubmit}>
-          <h3>Đăng Ký Tài Khoản</h3>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Họ và tên"
-              name="name"
-              value={name}
-              onChange={handleChangeInput}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Nhập email"
-              name="email"
-              value={email}
-              onChange={handleChangeInput}
-            />
-          </div>
-        
-        
+    <div>
+      {verife ? (
+        <form className="wrap-form">
+          <h3>Vui long nhap ma xac nhan</h3>
           <div className="mb-3">
             <input
               type="password"
               className="form-control"
-              placeholder="Nhập mật khẩu"
-              name="password"
-              value={password}
-              onChange={handleChangeInput}
+              placeholder="Nhập code"
+              name="text"
+              onChange={handleInputVery}
             />
           </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Nhập lại mật khẩu"
-              name="cf_password"
-              value={cf_password}
-              onChange={handleChangeInput}
-            />
-          </div>
-
           <div className="mb-3 pt-4">
-            <button className="btn-account-submit" type="submit">
-              Đăng ký
+            <button className="btn-account-submit" onClick={handleSubmitVery}>
+              xac nhan
             </button>
           </div>
-          <div className="text center">
-            <span>Bạn có tài khoản?</span>
-            <Link to="/login">Đăng nhập</Link>
-            <br />
-          </div>
         </form>
-      </div>
+      ) : (
+        <div className="account-form">
+          <div className="text-center mb-3">
+            <span className="logo-brand">
+              <Link to="/">
+                <img src="/logo.png" alt="logo" />
+                <span>XCODE</span>
+              </Link>
+            </span>
+          </div>
 
-    )  
-  }
-    
-     
-  </div>
- 
+          <form className="wrap-form" onSubmit={handleSubmit}>
+            <h3 style={{ fontWeight: "bold" }}>サインアップ</h3>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="名前"
+                name="name"
+                value={name}
+                onChange={handleChangeInput}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="メール"
+                name="email"
+                value={email}
+                onChange={handleChangeInput}
+              />
+            </div>
+            {/* <div className="mb-3">
+          <input
+            type="date"
+            className="form-control"
+            placeholder="生年月日"
+            name="DoB"
+            value={DoB}
+            onChange={handleChangeInput}
+          />
+        </div> */}
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="パスワード"
+                name="password"
+                value={password}
+                onChange={handleChangeInput}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="パスワード(もう一度入力)"
+                name="cf_password"
+                value={cf_password}
+                onChange={handleChangeInput}
+              />
+            </div>
+
+            <div className="mb-3 pt-4">
+              <button className="btn-account-submit" type="submit">
+                サインアップ
+              </button>
+            </div>
+            <div className="text center">
+              {/* <span>Bạn có tài khoản?</span> */}
+              <Link to="/login">サインイン</Link>
+              <br />
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
   );
 }
