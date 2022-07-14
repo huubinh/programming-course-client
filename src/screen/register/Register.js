@@ -53,20 +53,21 @@ export default function Register() {
   return (
     <div className="account-form">
       <div className="text-center mb-3">
-        <span className="">
+        <span className="logo-brand">
           <Link to="/">
-            <img src="https://id.unica.vn/images/logo.png" alt="logo" />
+            <img src="/logo.png" alt="logo" />
+            <span>XCODE</span>
           </Link>
         </span>
       </div>
 
       <form className="wrap-form" onSubmit={handleSubmit}>
-        <h3>Đăng Ký Tài Khoản</h3>
+        <h3 style={{ fontWeight: "bold" }}>サインアップ</h3>
         <div className="mb-3">
           <input
             type="text"
             className="form-control"
-            placeholder="Họ và tên"
+            placeholder="名前"
             name="name"
             value={name}
             onChange={handleChangeInput}
@@ -76,7 +77,7 @@ export default function Register() {
           <input
             type="email"
             className="form-control"
-            placeholder="Nhập email"
+            placeholder="メール"
             name="account"
             value={account}
             onChange={handleChangeInput}
@@ -84,19 +85,9 @@ export default function Register() {
         </div>
         <div className="mb-3">
           <input
-            type="text"
-            className="form-control"
-            placeholder="Nhập số điện thoại"
-            name="phone"
-            value={phone}
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="mb-3">
-          <input
             type="date"
             className="form-control"
-            placeholder="Nhập ngày sinh"
+            placeholder="生年月日"
             name="DoB"
             value={DoB}
             onChange={handleChangeInput}
@@ -106,7 +97,7 @@ export default function Register() {
           <input
             type="password"
             className="form-control"
-            placeholder="Nhập mật khẩu"
+            placeholder="パスワード"
             name="password"
             value={password}
             onChange={handleChangeInput}
@@ -116,7 +107,7 @@ export default function Register() {
           <input
             type="password"
             className="form-control"
-            placeholder="Nhập lại mật khẩu"
+            placeholder="パスワード(もう一度入力)"
             name="cf_password"
             value={cf_password}
             onChange={handleChangeInput}
@@ -125,12 +116,12 @@ export default function Register() {
 
         <div className="mb-3 pt-4">
           <button className="btn-account-submit" type="submit">
-            Đăng ký
+            サインアップ
           </button>
         </div>
         <div className="text center">
-          <span>Bạn có tài khoản?</span>
-          <Link to="/login">Đăng nhập</Link>
+          {/* <span>Bạn có tài khoản?</span> */}
+          <Link to="/login">サインイン</Link>
           <br />
         </div>
       </form>
