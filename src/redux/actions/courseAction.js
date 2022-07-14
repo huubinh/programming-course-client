@@ -9,7 +9,7 @@ export const getCourseDetailTrial = (id) => async (dispatch) => {
   dispatch({ type: COURSE_DETAIL_TRYAIL_REQUEST });
 
   try {
-    const data = await getData(`getTrialForGuest/${id}`);
+    const data = await getData(`course/${id}`);
     dispatch({ type: COURSE_DETAIL_TRYAIL_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

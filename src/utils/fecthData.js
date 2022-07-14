@@ -8,8 +8,8 @@ export const getData = async (url, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res);
-  const data = res.data.results;
+  console.log(res.data);
+  const data = res.data;
   return data;
 };
 

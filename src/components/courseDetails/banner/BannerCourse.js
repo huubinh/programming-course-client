@@ -15,35 +15,29 @@ export default function BannerCourse({ data }) {
                   <Link to="/">Trang chủ</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link to={`/category/${data[0].Course_category}`}>
-                    {data[0].categoryName}
+                  <Link to={`/category/${data.Course_category}`}>
+                    {data.categoryName}
                   </Link>
                 </li>
-                <li className="breadcrumb-item active">
-                  {data[0].Course_header}
-                </li>
+                <li className="breadcrumb-item active">{data.Course_header}</li>
               </ol>
             </nav>
-            <h2>{data[0].Course_header}</h2>
+            <h2>{data.Course_header}</h2>
 
             <div className="row">
               <div className="col-2">
-                <img
-                  src={data[0].teacherImage}
-                  alt=""
-                  className="d-inline-block"
-                />
-                <span style={{fontSize:12}}>{data[0].teacherName}</span>
+                <img src={data.image} alt="" className="d-inline-block" />
+                <span style={{ fontSize: 12 }}>{data.teacherName}</span>
               </div>
               <div className="col-3">
                 <div className="d-inline-block">
-                  <RateStar rating={data[0].Course_rate} />
+                  <RateStar rating={data.Course_rate} />
                 </div>
                 <span>162 đánh giá</span>
               </div>
               <div className="col-4">
                 <i className="fas fa-users"></i>
-                <span>{data[0].totalStudent} học viên</span>
+                <span>{data.totalStudent} học viên</span>
               </div>
               <div className="offset-2 col-1">
                 <svg
