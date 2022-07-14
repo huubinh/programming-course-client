@@ -6,11 +6,11 @@ import "./login.scss";
 
 export default function Login(props) {
   const initialState = {
-    account: "",
+    email: "",
     password: "",
   };
   const [userData, setUserData] = useState(initialState);
-  const { account, password } = userData;
+  const { email, password } = userData;
 
   const navigate = useNavigate();
 
@@ -24,8 +24,10 @@ export default function Login(props) {
   };
 
   const handleSubmit = (e) => {
+   
     e.preventDefault();
-    dispatch(signin(account, password));
+    dispatch(signin(email, password));
+
   };
 
   useEffect(() => {
@@ -49,8 +51,8 @@ export default function Login(props) {
             type="email"
             className="form-control"
             placeholder="Nhập địa chỉ email"
-            name="account"
-            value={account}
+            name="email"
+            value={email}
             onChange={handleChangeInput}
           />
         </div>

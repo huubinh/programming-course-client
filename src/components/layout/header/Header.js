@@ -8,11 +8,13 @@ import "./header.scss";
 export default function Header() {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
+  console.log("user: ",userSignin)
   const { userInfo } = userSignin;
 
   const signoutHandler = () => {
     dispatch(signout());
   };
+
 
   return (
     <header>
@@ -27,14 +29,15 @@ export default function Header() {
               <span>XCODE</span>
             </Link>
           </div>
-
+          
           {userInfo !== null ? (
             <div className="nav-user-action">
-              <img src={userInfo.success.image} alt="avatar" />
+             <h1>thanh cong</h1>
+              <img src={userInfo.result.user.avatar} alt="avatar" />
 
               <Dropdown className="d-inline mx-2 cus-dropdown">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
-                  {userInfo.success.name}
+                  {userInfo.result.user.email}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>

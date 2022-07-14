@@ -20,7 +20,7 @@ export const postData = async (url, post, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-
+ 
   const data = res.data;
   return data;
 };

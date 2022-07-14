@@ -24,15 +24,20 @@ import {
   USER_BUY_COURSE_FAIL,
 } from "../constants/userContants";
 
-export const signin = (account, password) => async (dispatch) => {
-  dispatch({ type: USER_SIGNIN_REQUEST, payload: { account, password } });
+export const signin = (email, password) => async (dispatch) => {
+  dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
-    const data = await postData("login", { account, password });
+    const data = await postData("auth/login", { email, password });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+    console.log("hieu ko loi: ", data);
+    console.log("hieu ko loi resulf: ", data.result);
+    
 
-    localStorage.setItem("userInfo", JSON.stringify({ success: data.success }));
+    localStorage.setItem("userInfo", JSON.stringify({ result: data.result }));
   } catch (error) {
+    console.log("hieu loi: ");
     dispatch({
+     
       type: USER_SIGNIN_FAIL,
       payload:
         error.response && error.response.data.message
@@ -40,24 +45,24 @@ export const signin = (account, password) => async (dispatch) => {
           : error.message,
     });
   }
+ 
 };
 
 export const register =
   ({ name, account, password, phone, DoB }) =>
   async (dispatch) => {
+    console.log(name+" "+account+"  "+password)
     dispatch({
       type: USER_REGISTER_REQUEST,
       payload: { name, account, password, phone, DoB },
     });
     try {
-      const data = await postData("register", {
+      const data = await postData("auth/register", {
         name,
         account,
         password,
-        phone,
-        DoB,
-        role: 2,
       });
+    
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
