@@ -8,7 +8,7 @@ export const getData = async (url, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res.data);
+  // console.log(res.data);
   const data = res.data;
   return data;
 };
@@ -20,7 +20,7 @@ export const postData = async (url, post, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
- 
+
   const data = res.data;
   return data;
 };

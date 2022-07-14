@@ -3,7 +3,7 @@ import {
   COURSE_DETAIL_TRYAIL_REQUEST,
   COURSE_DETAIL_TRYAIL_SUCCESS,
 } from "../constants/courseConstants";
-import { getData } from "../../utils/fecthData";
+import { getData } from "../../utils/fetchData";
 
 export const getCourseDetailTrial = (id) => async (dispatch) => {
   dispatch({ type: COURSE_DETAIL_TRYAIL_REQUEST });

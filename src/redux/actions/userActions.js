@@ -1,4 +1,4 @@
-import { postData, getData, putData } from "../../utils/fecthData";
+import { postData, getData, putData } from "../../utils/fetchData";
 import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
@@ -27,17 +27,15 @@ import {
   USER_VERIFY_FAIL,
 } from "../constants/userContants";
 
-
-export const verify = (email, code) => async (dispatch) =>{
-  dispatch({ type:  USER_VERIFY_REQUEST, payload: { email, code } });
-  try{
-    window.alert('fsdfsd')
+export const verify = (email, code) => async (dispatch) => {
+  dispatch({ type: USER_VERIFY_REQUEST, payload: { email, code } });
+  try {
+    window.alert("fsdfsd");
     console.log("xac nhan veryfy: ");
     const data = await postData("auth/verify-email", { email, code });
     console.log("xac nhan thanh cong: ", data.code);
     dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
- 
-  }catch (error) {
+  } catch (error) {
     console.log("xac nhan  loi veryfy: ");
     dispatch({
       type: USER_VERIFY_FAIL,
@@ -54,15 +52,13 @@ export const signin = (email, password) => async (dispatch) => {
   try {
     const data = await postData("auth/login", { email, password });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    console.log("hieu ko loi: ", data);
-    console.log("hieu ko loi resulf: ", data.result);
-    
+    // console.log("hieu ko loi: ", data);
+    // console.log("hieu ko loi resulf: ", data.result);
 
     localStorage.setItem("userInfo", JSON.stringify({ result: data.result }));
   } catch (error) {
-    console.log("hieu loi: ");
+    // console.log("hieu loi: ");
     dispatch({
-     
       type: USER_SIGNIN_FAIL,
       payload:
         error.response && error.response.data.message
@@ -70,26 +66,23 @@ export const signin = (email, password) => async (dispatch) => {
           : error.message,
     });
   }
- 
 };
 
 export const register =
   ({ name, email, password }) =>
   async (dispatch) => {
-   
     dispatch({
       type: USER_REGISTER_REQUEST,
-      payload: { name,email,  password },
+      payload: { name, email, password },
     });
     try {
       const data = await postData("auth/register", {
-       
         name,
         email,
         password,
       });
       console.log("dang ki ok: ");
-    
+
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     } catch (error) {
       console.log("dang ki loi: ");
