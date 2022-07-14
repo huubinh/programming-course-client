@@ -8,13 +8,12 @@ import "./header.scss";
 export default function Header() {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
-  console.log("user: ",userSignin)
+  console.log("user: ", userSignin);
   const { userInfo } = userSignin;
 
   const signoutHandler = () => {
     dispatch(signout());
   };
-
 
   return (
     <header>
@@ -26,10 +25,9 @@ export default function Header() {
               <span>XCODE</span>
             </Link>
           </div>
-          
+
           {userInfo !== null ? (
             <div className="nav-user-action">
-            
               <img src={userInfo.result.user.avatar} alt="avatar" />
 
               <Dropdown className="d-inline mx-2 cus-dropdown">
