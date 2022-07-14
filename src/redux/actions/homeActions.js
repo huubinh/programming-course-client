@@ -1,4 +1,4 @@
-import { getData } from "../../utils/fecthData";
+import { getData } from "../../utils/fetchData";
 import {
   HOME_LIST_FAIL,
   HOME_LIST_REQUEST,
@@ -10,7 +10,7 @@ export const getHomeList = (params) => async (dispatch) => {
     type: HOME_LIST_REQUEST,
   });
   try {
-    console.log(params);
+    // console.log(params);
     const categories = await getData("category");
     const courses = await getData(
       `${

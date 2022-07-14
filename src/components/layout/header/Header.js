@@ -8,7 +8,7 @@ import "./header.scss";
 export default function Header() {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
-  console.log("user: ", userSignin);
+  // console.log("user: ", userSignin);
   const { userInfo } = userSignin;
 
   const signoutHandler = () => {

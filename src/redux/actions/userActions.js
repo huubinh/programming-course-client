@@ -1,4 +1,4 @@
-import { postData, getData, putData } from "../../utils/fecthData";
+import { postData, getData, putData } from "../../utils/fetchData";
 import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
@@ -29,15 +29,13 @@ export const signin = (email, password) => async (dispatch) => {
   try {
     const data = await postData("auth/login", { email, password });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    console.log("hieu ko loi: ", data);
-    console.log("hieu ko loi resulf: ", data.result);
-    
+    // console.log("hieu ko loi: ", data);
+    // console.log("hieu ko loi resulf: ", data.result);
 
     localStorage.setItem("userInfo", JSON.stringify({ result: data.result }));
   } catch (error) {
-    console.log("hieu loi: ");
+    // console.log("hieu loi: ");
     dispatch({
-     
       type: USER_SIGNIN_FAIL,
       payload:
         error.response && error.response.data.message
@@ -45,13 +43,12 @@ export const signin = (email, password) => async (dispatch) => {
           : error.message,
     });
   }
- 
 };
 
 export const register =
   ({ name, account, password, phone, DoB }) =>
   async (dispatch) => {
-    console.log(name+" "+account+"  "+password)
+    // console.log(name + " " + account + "  " + password);
     dispatch({
       type: USER_REGISTER_REQUEST,
       payload: { name, account, password, phone, DoB },
@@ -62,7 +59,7 @@ export const register =
         account,
         password,
       });
-    
+
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     } catch (error) {
       dispatch({

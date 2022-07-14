@@ -20,7 +20,7 @@ export default function UserProfile(props) {
     User_DoB: "",
   });
   const [avatar, setAvatar] = useState("");
-  console.log(avatar);
+  // console.log(avatar);
 
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);

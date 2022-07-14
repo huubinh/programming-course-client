@@ -1,4 +1,4 @@
-import { getData } from "../../utils/fecthData";
+import { getData } from "../../utils/fetchData";
 import {
   CATEGORY_ITEM_FAIL,
   CATEGORY_ITEM_REQUEST,
