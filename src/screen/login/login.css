@@ -48,11 +48,11 @@
   border: 0px;
 }
 
-.account-form .wrap-form button:hover {
+/* .account-form .wrap-form button:hover {
   background: linear-gradient(45deg, #00dbde, #fc00ff);
   -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
-}
+} */
 
 .account-form .wrap-form .txt-1 {
   font-size: 16px;
@@ -81,11 +81,11 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   cursor: pointer;
 }
 
@@ -108,11 +108,11 @@
   background: #3b5998;
 }
 
-.account-form .wrap-form .another-login .fbook:hover {
+/* .account-form .wrap-form .another-login .fbook:hover {
   background: linear-gradient(45deg, #00dbde, #fc00ff);
   -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
-}
+} */
 
 .account-form .wrap-form a {
   color: #555;

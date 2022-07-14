@@ -38,9 +38,10 @@ export default function Login(props) {
   return (
     <div className="account-form">
       <div className="text-center mb-3">
-        <span className="">
+        <span className="logo-brand">
           <Link to="/">
-            <img src="https://id.unica.vn/images/logo.png" alt="logo" />
+            <img src="/logo.png" alt="logo" />
+            <span>XCODE</span>
           </Link>
         </span>
       </div>

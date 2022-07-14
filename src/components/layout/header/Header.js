@@ -22,10 +22,7 @@ export default function Header() {
         <div className="header-wrapper">
           <div className="logo-brand">
             <Link to="/">
-              <img
-                src="https://cdn-icons.flaticon.com/png/512/2888/premium/2888414.png?token=exp=1657596224~hmac=6311dba77e1bee83aad7985800059c9e"
-                alt="logo"
-              />
+              <img src="/logo.png" alt="logo" />
               <span>XCODE</span>
             </Link>
           </div>
