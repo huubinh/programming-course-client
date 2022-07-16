@@ -15,6 +15,7 @@ import {
   userRegisterReducer,
   userSigninReducer,
   userUpdateProfileReducer,
+  userVerifyReducer,
 } from "./reducers/userReducer";
 
 const initialState = {
@@ -39,6 +40,7 @@ const reducer = combineReducers({
   tagItem: tagItemReducer,
   tagList: tagListReducer,
   courseDetailTrial: courseDetailTrialReducer,
+  userVerify:userVerifyReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

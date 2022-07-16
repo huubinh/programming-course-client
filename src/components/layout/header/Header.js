@@ -32,7 +32,7 @@ export default function Header() {
           
           {userInfo !== null ? (
             <div className="nav-user-action">
-             <h1>thanh cong</h1>
+            
               <img src={userInfo.result.user.avatar} alt="avatar" />
 
               <Dropdown className="d-inline mx-2 cus-dropdown">
