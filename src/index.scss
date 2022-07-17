@@ -15,12 +15,22 @@ body {
 }
 
 #main {
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
 }
 
 #footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;
+  height: 2rem;
+}
+
+a {
+  color: black;
+}
+a:hover {
+  color: #752ad1;
+}
+a:active {
+  color: white;
 }

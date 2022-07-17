@@ -3,7 +3,9 @@ import Footer from "./components/layout/footer/Footer";
 import Header from "./components/layout/header/Header";
 import Home from "./screen/Home";
 import TeacherDetails from "./screen/TeacherDetails";
-import CourseDetails from "./screen/CourseDetails";
+import CourseDetails from "./screen/course/CourseDetails";
+import LessonDetails from "./screen/lesson/LessonDetails";
+import Quiz from "./screen/quiz/Quiz";
 import Cart from "./screen/Cart";
 import Category from "./screen/category/Category";
 import { Route, Routes } from "react-router-dom";
@@ -24,6 +26,8 @@ class App extends Component {
             <Route index path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/course/:id" element={<CourseDetails />} />
+            <Route path="/course/:id/lessons" element={<LessonDetails />} />
+            <Route path="/course/:id/quiz" element={<Quiz />} />
             <Route path="/category/:id" element={<Category />} />
             <Route path="/tag/:id" element={<Tag />} />
             <Route path="/teacher/:id" element={<TeacherDetails />} />
@@ -36,6 +40,7 @@ class App extends Component {
             <Route path="/test" element={<Test />}></Route>
           </Routes>
         </div>
+        <div style={{ height: "40px" }}></div>
         <div id="footer">
           <Footer />
         </div>
