@@ -29,25 +29,6 @@ export default function Home() {
         <>
           <div id="home" className="container" style={{ marginTop: "110px" }}>
             <div className="row">
-              {/* <div className="col-1">
-                {" "}
-                <div className="search-form">
-                  <form className="d-flex">
-                    <div className="wrap">
-                      <div className="search">
-                        <input
-                          type="text"
-                          className="searchTerm"
-                          placeholder="検索"
-                        />
-                        <button type="submit" className="searchButton">
-                      <i className="fa fa-search"></i>
-                    </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div> */}
               <div className="col-4 mt-1">
                 <h3>コース一覧</h3>
               </div>
@@ -84,8 +65,7 @@ export default function Home() {
 
                 <Button
                   variant="primary"
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     dispatch(
                       getHomeList({
                         name: searchName,

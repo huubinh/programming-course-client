@@ -6,9 +6,10 @@ import {
 } from "../constants/homeConstants";
 
 export const getHomeList = (params) => async (dispatch) => {
-  dispatch({
-    type: HOME_LIST_REQUEST,
-  });
+  !params &&
+    dispatch({
+      type: HOME_LIST_REQUEST,
+    });
   try {
     // console.log(params);
     const categories = await getData("category");
