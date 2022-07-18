@@ -56,9 +56,10 @@ header {
       padding: 9px 10px;
       border-radius: 3px;
       display: inline-block;
-      color: #ffffff;
+
       &:hover {
-        border: 1px solid #f26c4f;
+        border: 1px solid #752ad1;
+        color: #752ad1;
       }
     }
   }

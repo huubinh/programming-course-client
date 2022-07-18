@@ -45,7 +45,7 @@ export default function Login(props) {
       </div>
       <form className="wrap-form" onSubmit={handleSubmit}>
         <h3 style={{ fontWeight: "bold" }}>サインイン</h3>
-        <div className="mb-4">
+        <div className="mt-3 mb-4">
           <input
             type="email"
             className="form-control"
@@ -55,7 +55,7 @@ export default function Login(props) {
             onChange={handleChangeInput}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-3">
           <input
             type="password"
             className="form-control"

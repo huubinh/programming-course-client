@@ -78,59 +78,59 @@ export default function Register() {
   }, [navigate, verifySuccess]);
 
   return (
-    <div>
+    <div className="account-form">
+      <div className="text-center mb-3">
+        <span className="logo-brand">
+          <Link to="/">
+            <img src="/logo.png" alt="logo" />
+            <span>XCODE</span>
+          </Link>
+        </span>
+      </div>
+
       {verife ? (
         <form className="wrap-form">
-          <h3>Vui long nhap ma xac nhan</h3>
-          <div className="mb-3">
+          <h3 style={{ fontWeight: "bold" }}>認証コードを入力</h3>
+          <div className="mt-3 mb-3">
             <input
-              type="password"
+              type="text"
               className="form-control"
-              placeholder="Nhập code"
+              placeholder="6桁のコードを入力"
               name="text"
+              value={code}
               onChange={handleInputVery}
             />
           </div>
           <div className="mb-3 pt-4">
             <button className="btn-account-submit" onClick={handleSubmitVery}>
-              xac nhan
+              認証
             </button>
           </div>
         </form>
       ) : (
-        <div className="account-form">
-          <div className="text-center mb-3">
-            <span className="logo-brand">
-              <Link to="/">
-                <img src="/logo.png" alt="logo" />
-                <span>XCODE</span>
-              </Link>
-            </span>
+        <form className="wrap-form" onSubmit={handleSubmit}>
+          <h3 style={{ fontWeight: "bold" }}>サインアップ</h3>
+          <div className="mt-3 mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="名前"
+              name="name"
+              value={name}
+              onChange={handleChangeInput}
+            />
           </div>
-
-          <form className="wrap-form" onSubmit={handleSubmit}>
-            <h3 style={{ fontWeight: "bold" }}>サインアップ</h3>
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="名前"
-                name="name"
-                value={name}
-                onChange={handleChangeInput}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="email"
-                className="form-control"
-                placeholder="メール"
-                name="email"
-                value={email}
-                onChange={handleChangeInput}
-              />
-            </div>
-            {/* <div className="mb-3">
+          <div className="mb-3">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="メール"
+              name="email"
+              value={email}
+              onChange={handleChangeInput}
+            />
+          </div>
+          {/* <div className="mb-3">
           <input
             type="date"
             className="form-control"
@@ -140,39 +140,38 @@ export default function Register() {
             onChange={handleChangeInput}
           />
         </div> */}
-            <div className="mb-3">
-              <input
-                type="password"
-                className="form-control"
-                placeholder="パスワード"
-                name="password"
-                value={password}
-                onChange={handleChangeInput}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                className="form-control"
-                placeholder="パスワード(もう一度入力)"
-                name="cf_password"
-                value={cf_password}
-                onChange={handleChangeInput}
-              />
-            </div>
+          <div className="mb-3">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="パスワード"
+              name="password"
+              value={password}
+              onChange={handleChangeInput}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="パスワード(もう一度入力)"
+              name="cf_password"
+              value={cf_password}
+              onChange={handleChangeInput}
+            />
+          </div>
 
-            <div className="mb-3 pt-4">
-              <button className="btn-account-submit" type="submit">
-                サインアップ
-              </button>
-            </div>
-            <div className="text center">
-              {/* <span>Bạn có tài khoản?</span> */}
-              <Link to="/login">サインイン</Link>
-              <br />
-            </div>
-          </form>
-        </div>
+          <div className="mb-3 pt-4">
+            <button className="btn-account-submit" type="submit">
+              サインアップ
+            </button>
+          </div>
+          <div className="text center">
+            {/* <span>Bạn có tài khoản?</span> */}
+            <Link to="/login">サインイン</Link>
+            <br />
+          </div>
+        </form>
       )}
     </div>
   );

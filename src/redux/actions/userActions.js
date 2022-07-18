@@ -30,7 +30,6 @@ import {
 export const verify = (email, code) => async (dispatch) => {
   dispatch({ type: USER_VERIFY_REQUEST, payload: { email, code } });
   try {
-    window.alert("fsdfsd");
     console.log("xac nhan veryfy: ");
     const data = await postData("auth/verify-email", { email, code });
     console.log("xac nhan thanh cong: ", data.code);
