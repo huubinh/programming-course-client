@@ -24,13 +24,7 @@ export default function CourseDetails() {
   useEffect(() => {
     dispatch(getCourseDetailTrial(id));
     userInfo
-      ? dispatch(
-          getCourseDetailTrial(
-            id,
-            userInfo.result.user.id,
-            userInfo.result.tokens
-          )
-        )
+      ? dispatch(getCourseDetailTrial(id, userInfo.user.id, userInfo.tokens))
       : dispatch(getCourseDetailTrial(id));
     //eslint-disable-next-line
   }, [dispatch, id]);

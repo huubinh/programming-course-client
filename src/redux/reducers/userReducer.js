@@ -23,7 +23,23 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_RESET,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_VERIFY_REQUEST,
+  USER_VERIFY_SUCCESS,
+  USER_VERIFY_FAIL,
 } from "../constants/userContants";
+
+export const userVerifyReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_VERIFY_REQUEST:
+      return { loading: true };
+    case USER_VERIFY_SUCCESS:
+      return { loading: false, verifySuccess: action.payload };
+    case USER_VERIFY_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 export const userSigninReducer = (state = {}, action) => {
   switch (action.type) {

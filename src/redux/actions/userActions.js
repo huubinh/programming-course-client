@@ -22,17 +22,39 @@ import {
   USER_BUY_COURSE_REQUEST,
   USER_BUY_COURSE_SUCCESS,
   USER_BUY_COURSE_FAIL,
+  USER_VERIFY_REQUEST,
+  USER_VERIFY_SUCCESS,
+  USER_VERIFY_FAIL,
 } from "../constants/userContants";
+
+export const verify = (email, code) => async (dispatch) => {
+  dispatch({ type: USER_VERIFY_REQUEST, payload: { email, code } });
+  try {
+    console.log("xac nhan veryfy: ");
+    const data = await postData("auth/verify-email", { email, code });
+    console.log("xac nhan thanh cong: ", data.code);
+    dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
+  } catch (error) {
+    console.log("xac nhan  loi veryfy: ");
+    dispatch({
+      type: USER_VERIFY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
     const data = await postData("auth/login", { email, password });
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.result });
     // console.log("hieu ko loi: ", data);
     // console.log("hieu ko loi resulf: ", data.result);
 
-    localStorage.setItem("userInfo", JSON.stringify({ result: data.result }));
+    localStorage.setItem("userInfo", JSON.stringify(data.result));
   } catch (error) {
     // console.log("hieu loi: ");
     dispatch({
@@ -46,22 +68,23 @@ export const signin = (email, password) => async (dispatch) => {
 };
 
 export const register =
-  ({ name, account, password, phone, DoB }) =>
+  ({ name, email, password }) =>
   async (dispatch) => {
-    // console.log(name + " " + account + "  " + password);
     dispatch({
       type: USER_REGISTER_REQUEST,
-      payload: { name, account, password, phone, DoB },
+      payload: { name, email, password },
     });
     try {
       const data = await postData("auth/register", {
         name,
-        account,
+        email,
         password,
       });
+      console.log("dang ki ok: ");
 
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     } catch (error) {
+      console.log("dang ki loi: ");
       dispatch({
         type: USER_REGISTER_FAIL,
         payload:
@@ -72,14 +95,14 @@ export const register =
     }
   };
 
-export const getUserDetail = () => async (dispatch, getState) => {
-  dispatch({ type: USER_DETAILS_REQUEST });
+export const getUserDetail = (params) => async (dispatch, getState) => {
+  !params && dispatch({ type: USER_DETAILS_REQUEST });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
-    const data = await getData("user/getProfile", userInfo.success.token);
-    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+    const data = await getData("auth/get-profile", userInfo.tokens);
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data.result });
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -91,38 +114,27 @@ export const getUserDetail = () => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfile = (user) => async (dispatch, getState) => {
-  dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
+export const updateUserProfile = (dataUser) => async (dispatch, getState) => {
+  // dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: dataUser });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
     const data = await putData(
-      "user/updateProfile",
-      user,
-      userInfo.success.token
+      `user/${userInfo.user.id}`,
+      dataUser,
+      userInfo.tokens
     );
+    console.log(data);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({
       type: USER_SIGNIN_SUCCESS,
-      payload: {
-        success: {
-          token: userInfo.success.token,
-          name: data.User_name,
-          image: data.User_image,
-        },
-      },
+      payload: { ...userInfo, user: data.result },
     });
 
     localStorage.setItem(
       "userInfo",
-      JSON.stringify({
-        success: {
-          token: userInfo.success.token,
-          name: data.User_name,
-          image: data.User_image,
-        },
-      })
+      JSON.stringify({ ...userInfo, user: data.result })
     );
   } catch (error) {
     const message =

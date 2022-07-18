@@ -27,7 +27,7 @@ export const getCourseDetailTrial =
       const data = await getData(`course/${courseId}`);
       dispatch({
         type: COURSE_DETAIL_TRIAL_SUCCESS,
-        payload: { ...data.result[0], attended, achievement },
+        payload: { ...data.result, attended, achievement },
       });
     } catch (error) {
       dispatch({

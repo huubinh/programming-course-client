@@ -28,17 +28,19 @@ export default function Header() {
 
           {userInfo !== null ? (
             <div className="nav-user-action">
-              <img src={userInfo.result.user.avatar} alt="avatar" />
+              <img src={userInfo.user.avatar} alt="avatar" />
 
               <Dropdown className="d-inline mx-2 cus-dropdown">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
-                  {userInfo.result.user.email}
+                  <span className="dropdown" style={{ marginRight: "6px" }}>
+                    {userInfo.user.name}
+                  </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Link to="/user/profile">プロフィール</Link>
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={signoutHandler}>
+                  <Dropdown.Item onClick={signoutHandler} className="dropdown">
                     サインアウト
                   </Dropdown.Item>
                 </Dropdown.Menu>

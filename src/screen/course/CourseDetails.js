@@ -23,13 +23,7 @@ export default function CourseDetails() {
   useEffect(() => {
     dispatch(getCourseDetailTrial(id));
     userInfo
-      ? dispatch(
-          getCourseDetailTrial(
-            id,
-            userInfo.result.user.id,
-            userInfo.result.tokens
-          )
-        )
+      ? dispatch(getCourseDetailTrial(id, userInfo.user.id, userInfo.tokens))
       : dispatch(getCourseDetailTrial(id));
     //eslint-disable-next-line
   }, [dispatch, id]);
@@ -88,8 +82,8 @@ export default function CourseDetails() {
                         if (userInfo) {
                           postData(
                             "/attendance/add",
-                            { userId: userInfo.result.user.id, courseId: id },
-                            userInfo.result.tokens
+                            { userId: userInfo.user.id, courseId: id },
+                            userInfo.tokens
                           ).then(navigate(`/course/${id}/lessons`));
                         } else navigate("/login");
                       }}
@@ -110,26 +104,28 @@ export default function CourseDetails() {
                 </div>
               </div>
 
-              <div className="row align-items-center mt-4">
-                <div className="col-3">
-                  <Button
-                    variant="success"
-                    size="lg"
-                    onClick={() => {
-                      navigate(`/course/${id}/quiz`);
-                    }}
-                    style={{ width: "175px" }}
-                  >
-                    クイズに答える
-                  </Button>
+              {data.attended && (
+                <div className="row align-items-center mt-4">
+                  <div className="col-3">
+                    <Button
+                      variant="success"
+                      size="lg"
+                      onClick={() => {
+                        navigate(`/course/${id}/quiz`);
+                      }}
+                      style={{ width: "175px" }}
+                    >
+                      クイズに答える
+                    </Button>
+                  </div>
+                  <div className="col-9">
+                    <h5>
+                      成績：
+                      {data.achievement ? data.achievement : "まだありません。"}
+                    </h5>
+                  </div>
                 </div>
-                <div className="col-9">
-                  <h5>
-                    成績：
-                    {data.achievement ? data.achievement : "まだありません。"}
-                  </h5>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
