@@ -84,6 +84,7 @@ export default function Home() {
                 <CoursesSection
                   categories={list.categories}
                   courses={list.courses}
+                  number={4}
                 />
               </div>
             </div>

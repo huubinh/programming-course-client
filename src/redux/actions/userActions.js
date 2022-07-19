@@ -95,14 +95,18 @@ export const register =
     }
   };
 
-export const getUserDetail = (params) => async (dispatch, getState) => {
-  !params && dispatch({ type: USER_DETAILS_REQUEST });
+export const getUserDetail = () => async (dispatch, getState) => {
+  dispatch({ type: USER_DETAILS_REQUEST });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
     const data = await getData("auth/get-profile", userInfo.tokens);
-    dispatch({ type: USER_DETAILS_SUCCESS, payload: data.result });
+    const categories = await getData("category");
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: { user: data.result, categories: categories.result },
+    });
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -115,7 +119,7 @@ export const getUserDetail = (params) => async (dispatch, getState) => {
 };
 
 export const updateUserProfile = (dataUser) => async (dispatch, getState) => {
-  // dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: dataUser });
+  dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: dataUser });
   const {
     userSignin: { userInfo },
   } = getState();

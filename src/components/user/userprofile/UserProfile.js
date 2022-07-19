@@ -11,6 +11,9 @@ import {
   USER_UPDATE_PROFILE_RESET,
   USER_DETAILS_RESET,
 } from "../../../redux/constants/userContants";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import CoursesSection from "../../course/Courses";
 
 export default function UserProfile(props) {
   const [dataUser, setDataUser] = useState({
@@ -23,22 +26,22 @@ export default function UserProfile(props) {
 
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);
-  const { user, loading } = userDetails;
+  const { data, loading } = userDetails;
 
   const uploadApi = "https://api.metahub.market/api/uploads";
 
   useEffect(() => {
-    if (!user) {
+    if (!data) {
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetail());
     } else {
       setDataUser({
-        name: user.user.name,
-        avatar: user.user.avatar,
-        cover: user.user.cover,
+        name: data.user.user.name,
+        avatar: data.user.user.avatar,
+        cover: data.user.user.cover,
       });
     }
-  }, [dispatch, user]);
+  }, [dispatch, data]);
 
   const avatarInputRef = useRef();
   const coverPhotoInputRef = useRef();
@@ -49,7 +52,7 @@ export default function UserProfile(props) {
     formData.append("image", file);
     const res = await axios.post(uploadApi, formData);
     dispatch(updateUserProfile({ ...dataUser, avatar: res.data.data }));
-    dispatch(getUserDetail({}));
+    dispatch(getUserDetail());
   };
 
   const handleChangeCoverPhoto = async (e) => {
@@ -58,7 +61,7 @@ export default function UserProfile(props) {
     formData.append("image", file);
     const res = await axios.post(uploadApi, formData);
     dispatch(updateUserProfile({ ...dataUser, cover: res.data.data }));
-    dispatch(getUserDetail({}));
+    dispatch(getUserDetail());
   };
 
   const handleChangeName = (e) => {
@@ -90,13 +93,21 @@ export default function UserProfile(props) {
     // );
     // dispatch({ type: USER_DETAILS_RESET });
     dispatch(updateUserProfile(dataUser));
-    dispatch(getUserDetail({}));
+    dispatch(getUserDetail());
+  };
+
+  const [searchName, setSearchName] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
+  const [search, setSearch] = useState({ name: "", category: "" });
+
+  const handleSearch = () => {
+    setSearch({ name: searchName, category: searchCategory });
   };
 
   return (
     <>
       {loading && <LoadingPage />}
-      {user && (
+      {data && (
         <div
           style={{
             minHeight: "100vh",
@@ -105,7 +116,7 @@ export default function UserProfile(props) {
           className="user-profile"
         >
           <img
-            src={user.user.cover}
+            src={data.user.user.cover}
             alt="course"
             style={{
               position: "fixed",
@@ -116,7 +127,7 @@ export default function UserProfile(props) {
             }}
           />
           <div className="container">
-            <div className="row align-items-center">
+            <div className="row">
               <div className="col-4">
                 <div
                   className="card left-information"
@@ -132,7 +143,7 @@ export default function UserProfile(props) {
                       src={
                         avatar !== ""
                           ? URL.createObjectURL(avatar)
-                          : user.user.avatar
+                          : data.user.user.avatar
                       }
                       className="img-fluid image-avatar"
                       alt="avatar"
@@ -181,33 +192,33 @@ export default function UserProfile(props) {
                   >
                     <a
                       className="list-group-item list-group-item-action active"
-                      id="list-home-list"
-                      data-bs-toggle="list"
-                      href="#list-home"
-                      role="tab"
-                      aria-controls="list-home"
-                    >
-                      <i className="fa fa-user" aria-hidden="true"></i>
-                      マイプロフィール
-                    </a>
-                    <a
-                      className="list-group-item list-group-item-action"
                       id="list-profile-list"
                       data-bs-toggle="list"
                       href="#list-profile"
                       role="tab"
                       aria-controls="list-profile"
                     >
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                      マイプロフィール
+                    </a>
+                    <a
+                      className="list-group-item list-group-item-action"
+                      id="list-course-list"
+                      data-bs-toggle="list"
+                      href="#list-course"
+                      role="tab"
+                      aria-controls="list-course"
+                    >
                       <i className="fa fa-bookmark" aria-hidden="true"></i>
                       マイコース
                     </a>
                     <a
                       className="list-group-item list-group-item-action"
-                      id="list-settings-list"
+                      id="list-achievements-list"
                       data-bs-toggle="list"
-                      href="#list-settings"
+                      href="#list-achievements"
                       role="tab"
-                      aria-controls="list-settings"
+                      aria-controls="list-achievements"
                     >
                       <i
                         className="fa fa-star"
@@ -235,9 +246,9 @@ export default function UserProfile(props) {
                   >
                     <div
                       className="tab-pane fade show active information-details-user"
-                      id="list-home"
+                      id="list-profile"
                       role="tabpanel"
-                      aria-labelledby="list-home-list"
+                      aria-labelledby="list-profile-list"
                     >
                       <h3 className="text-center text-title">
                         マイプロフィール
@@ -261,7 +272,7 @@ export default function UserProfile(props) {
                             disabled
                             type="email"
                             className="form-control"
-                            value={user.user.email}
+                            value={data.user.user.email}
                           />
                         </div>
                         <div className="mt-5 btn-save-information d-flex justify-content-center">
@@ -277,19 +288,142 @@ export default function UserProfile(props) {
                     </div>
                     <div
                       className="tab-pane fade"
-                      id="list-profile"
+                      id="list-course"
                       role="tabpanel"
-                      aria-labelledby="list-profile-list"
+                      aria-labelledby="list-course-list"
                     >
-                      ...
+                      <div className="row justify-content-center">
+                        <div className="col-12 mb-2 text-center">
+                          <h3>マイコース</h3>
+                        </div>
+                        <div className="col-10 d-flex justify-content-end">
+                          <Form.Control
+                            placeholder="キーワード検索"
+                            value={searchName}
+                            onChange={(e) => setSearchName(e.target.value)}
+                            onKeyUp={(e) => {
+                              if (e.key === "Enter") {
+                                handleSearch();
+                              }
+                            }}
+                            style={{ width: "268px" }}
+                          />
+
+                          <Form.Select
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            style={{ width: "200px", marginLeft: "23px" }}
+                          >
+                            <option value="">全てのカテゴリー</option>
+                            {data.categories.map((item) => (
+                              <option value={item.id} key={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </Form.Select>
+
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              handleSearch();
+                            }}
+                            style={{ width: "50px", marginLeft: "20px" }}
+                          >
+                            <i className="fa fa-search"></i>
+                          </Button>
+                        </div>
+                      </div>
+                      <div style={{ marginTop: "30px" }}>
+                        <div className="mt-3">
+                          <CoursesSection
+                            categories={data.categories}
+                            courses={data.user.courseOfUser
+                              .filter(
+                                (item) =>
+                                  !search.name ||
+                                  item.name
+                                    .toLowerCase()
+                                    .includes(search.name.toLowerCase())
+                              )
+                              .filter(
+                                (item) =>
+                                  !search.category ||
+                                  item.categoryId === search.category
+                              )}
+                            number={2}
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div
                       className="tab-pane fade"
-                      id="list-settings"
+                      id="list-achievements"
                       role="tabpanel"
-                      aria-labelledby="list-settings-list"
+                      aria-labelledby="list-achievements-list"
                     >
-                      ...
+                      <div className="row justify-content-center">
+                        <div className="col-12 mb-2 text-center">
+                          <h3>マイコース</h3>
+                        </div>
+                        <div className="col-10 d-flex justify-content-end">
+                          <Form.Control
+                            placeholder="キーワード検索"
+                            value={searchName}
+                            onChange={(e) => setSearchName(e.target.value)}
+                            onKeyUp={(e) => {
+                              if (e.key === "Enter") {
+                                handleSearch();
+                              }
+                            }}
+                            style={{ width: "268px" }}
+                          />
+
+                          <Form.Select
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            style={{ width: "200px", marginLeft: "23px" }}
+                          >
+                            <option value="">全てのカテゴリー</option>
+                            {data.categories.map((item) => (
+                              <option value={item.id} key={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </Form.Select>
+
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              handleSearch();
+                            }}
+                            style={{ width: "50px", marginLeft: "20px" }}
+                          >
+                            <i className="fa fa-search"></i>
+                          </Button>
+                        </div>
+                      </div>
+                      <div style={{ marginTop: "30px" }}>
+                        <div className="mt-3">
+                          <CoursesSection
+                            categories={data.categories}
+                            courses={data.user.courseOfUser
+                              .filter(
+                                (item) =>
+                                  !search.name ||
+                                  item.name
+                                    .toLowerCase()
+                                    .includes(search.name.toLowerCase())
+                              )
+                              .filter(
+                                (item) =>
+                                  !search.category ||
+                                  item.categoryId === search.category
+                              )}
+                            number={2}
+                            showAchievements={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
