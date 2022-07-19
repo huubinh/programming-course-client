@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signout } from "../../../redux/actions/userActions";
 import "./header.scss";
 
@@ -15,6 +15,7 @@ export default function Header() {
     dispatch(signout());
   };
 
+  const navigate = useNavigate();
   return (
     <header>
       <div className="container">
@@ -37,8 +38,11 @@ export default function Header() {
                   </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link to="/user/profile">プロフィール</Link>
+                  <Dropdown.Item
+                    onClick={() => navigate("/user/profile")}
+                    className="dropdown"
+                  >
+                    プロフィール
                   </Dropdown.Item>
                   <Dropdown.Item onClick={signoutHandler} className="dropdown">
                     サインアウト

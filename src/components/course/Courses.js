@@ -9,7 +9,9 @@ export default function CoursesSection({
 }) {
   return (
     // <div className="mb-2">
-    <div className="row g-4 justify-content-center">
+    <div
+      className={number === 4 ? "row g-4" : "row g-4 justify-content-center"}
+    >
       {courses.map((item, index) => (
         <div
           className={

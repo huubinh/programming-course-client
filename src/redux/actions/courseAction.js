@@ -12,17 +12,14 @@ export const getCourseDetailTrial =
     try {
       let attended = false;
       let achievement = null;
-      userId &&
-        (await getData(`attendance/${userId}/${courseId}`, token)
+      if (userId) {
+        await getData(`attendance/${userId}/${courseId}`, token)
           .then((res) => {
             attended = true;
+            achievement = res.result.achievement;
           })
-          .catch(() => (attended = false))) &&
-        (await getData(`attendance/${userId}/${courseId}`, token)
-          .then((res) => {
-            achievement = res.data.result.achievement;
-          })
-          .catch(() => {}));
+          .catch(() => (attended = false));
+      }
       console.log(achievement);
       const data = await getData(`course/${courseId}`);
       dispatch({

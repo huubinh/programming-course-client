@@ -418,7 +418,8 @@ export default function UserProfile(props) {
                                 (item) =>
                                   !search.category ||
                                   item.categoryId === search.category
-                              )}
+                              )
+                              .filter((item) => item.achievement)}
                             number={2}
                             showAchievements={true}
                           />
