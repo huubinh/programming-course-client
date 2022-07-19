@@ -16,16 +16,16 @@ export const getHomeList = (params) => async (dispatch) => {
     const courses = await getData(
       `${
         params
-          ? `course${
+          ? `course?sortBy=createdAt:desc${
               params.name !== "" && params.category !== ""
-                ? `?name=${params.name}&categoryId=${params.category}`
+                ? `&name=${params.name}&categoryId=${params.category}`
                 : params.name !== ""
-                ? `?name=${params.name}`
+                ? `&name=${params.name}`
                 : params.category !== ""
-                ? `?categoryId=${params.category}`
+                ? `&categoryId=${params.category}`
                 : ""
             }`
-          : "course"
+          : "course?sortBy=createdAt:desc"
       }`
     );
 

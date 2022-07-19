@@ -25,7 +25,7 @@ class CourseItem extends Component {
                     style={{
                       background: "#752ad1",
                       opacity: "1",
-                      width: this.props.course.achievement * 10,
+                      width: `${this.props.course.achievement * 10}%`,
                     }}
                   ></div>
                 </div>

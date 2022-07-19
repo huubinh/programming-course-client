@@ -105,26 +105,38 @@ export default function CourseDetails() {
               </div>
 
               {data.attended && (
-                <div className="row align-items-center mt-4">
-                  <div className="col-3">
-                    <Button
-                      variant="success"
-                      size="lg"
-                      onClick={() => {
-                        navigate(`/course/${id}/quiz`);
-                      }}
-                      style={{ width: "175px" }}
-                    >
-                      クイズに答える
-                    </Button>
+                <>
+                  <h5 className="mb-3 mt-4" style={{ marginLeft: "-4px" }}>
+                    クイズ
+                  </h5>
+                  <div className="row align-items-center">
+                    <div className="col-3">
+                      <Button
+                        variant="success"
+                        size="lg"
+                        onClick={() => {
+                          navigate(`/course/${id}/quiz`);
+                        }}
+                        style={{ width: "175px" }}
+                        disabled={typeof data.achievement === "number"}
+                      >
+                        クイズに答える
+                      </Button>
+                    </div>
+                    <div className="col-9">
+                      <h5 style={{ marginLeft: "-70px" }}>
+                        成績：
+                        {typeof data.achievement === "number" ? (
+                          <span style={{ color: "#752ad1" }}>
+                            {data.achievement}/10
+                          </span>
+                        ) : (
+                          "まだありません。"
+                        )}
+                      </h5>
+                    </div>
                   </div>
-                  <div className="col-9">
-                    <h5>
-                      成績：
-                      {data.achievement ? data.achievement : "まだありません。"}
-                    </h5>
-                  </div>
-                </div>
+                </>
               )}
             </div>
           </div>
