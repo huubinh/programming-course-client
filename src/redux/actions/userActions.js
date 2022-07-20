@@ -39,7 +39,7 @@ import {
 export const reset = (password, token) => async (dispatch) =>{
   dispatch({ type:  USER_RESET_REQUEST, payload: { password} });
   try{
-    window.alert('co chay vao reset');
+
 
     const data = await postData("auth/reset-password", { password }, token);
 
@@ -61,7 +61,7 @@ export const reset = (password, token) => async (dispatch) =>{
 export const fogot = (email) => async (dispatch) =>{
   dispatch({ type:  USER_FOGOT_REQUEST, payload: { email} });
   try{
-    window.alert('co chay vao fogot');
+
 
     const data = await postData("auth/forgot-password", { email });
 

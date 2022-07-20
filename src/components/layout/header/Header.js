@@ -72,8 +72,8 @@ export default function Header() {
                       title="reset mk"
                       centered
                       visible={visible}
-                      // onOk={doiPass}
-                      // onCancel={() => setVisible(false)}
+                      onOk={doiPass}
+                      onCancel={() => setVisible(false)}
                       width={1000}
                     >
                       <div className="mb-3">
@@ -85,9 +85,9 @@ export default function Header() {
                           onChange={handlePass}
                         />
                       </div>
-                      <div>
+                      {/* <div>
                         <button onClick={doiPass}>ok</button>
-                      </div>
+                      </div> */}
                     </Modal>
                   </Dropdown.Item>
                 </Dropdown.Menu>
