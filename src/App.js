@@ -1,44 +1,32 @@
+import React from "react";
 import { Component } from "react";
-import Footer from "./components/layout/footer/Footer";
-import Header from "./components/layout/header/Header";
-import Home from "./screen/Home";
-import TeacherDetails from "./screen/TeacherDetails";
-import CourseDetails from "./screen/CourseDetails";
-import Cart from "./screen/Cart";
-import Category from "./screen/category/Category";
-import { Route, Routes } from "react-router-dom";
-import Tag from "./screen/category/Tag";
-import MyCourse from "./screen/user/MyCourse";
-import UserProfileScreen from "./screen/user/UserProfile";
-import Test from "./screen/Test";
-import MyCourseDetail from "./screen/MyCourseDetail/MyCourseDetail";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import ChangeRouter from "./components/changeRouter";
+import store from "./redux/store";
+import { ToastContainer } from "react-toastify";
+
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div id="header">
-          <Header />
-        </div>
-        <div id="main">
-          <Routes>
-            <Route index path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/course/:id" element={<CourseDetails />} />
-            <Route path="/category/:id" element={<Category />} />
-            <Route path="/tag/:id" element={<Tag />} />
-            <Route path="/teacher/:id" element={<TeacherDetails />} />
-            <Route path="/user/my-course" element={<MyCourse />} />
-            <Route path="/user/profile" element={<UserProfileScreen />} />
-            <Route
-              path="/user/my-course/:id"
-              element={<MyCourseDetail />}
-            ></Route>
-            <Route path="/test" element={<Test />}></Route>
-          </Routes>
-        </div>
-        <div id="footer">
-          <Footer />
-        </div>
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          style={{ width: "fit-content" }}
+        />
+        <Provider store={store}>
+          <BrowserRouter>
+            <ChangeRouter />
+          </BrowserRouter>
+        </Provider>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { postData, getData, putData } from "../../utils/fecthData";
+import { postData, getData, putData } from "../../utils/fetchData";
 import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
@@ -10,6 +10,7 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_DETAILS_RESET,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
@@ -31,22 +32,17 @@ import {
   USER_RESET_REQUEST,
   USER_RESET_SUCCESS,
   USER_RESET_FAIL,
-
-
 } from "../constants/userContants";
+import { toast } from "react-toastify";
 
-
-export const reset = (password, token) => async (dispatch) =>{
-  dispatch({ type:  USER_RESET_REQUEST, payload: { password} });
-  try{
-
-
+export const reset = (password, token) => async (dispatch) => {
+  dispatch({ type: USER_RESET_REQUEST, payload: { password } });
+  try {
     const data = await postData("auth/reset-password", { password }, token);
 
     dispatch({ type: USER_RESET_SUCCESS, payload: data });
-    console.log("reset ok: ", data)
- 
-  }catch (error) {
+    console.log("reset ok: ", data);
+  } catch (error) {
     console.log("xac nhan  loi reset: ");
     dispatch({
       type: USER_RESET_FAIL,
@@ -58,17 +54,14 @@ export const reset = (password, token) => async (dispatch) =>{
   }
 };
 
-export const fogot = (email) => async (dispatch) =>{
-  dispatch({ type:  USER_FOGOT_REQUEST, payload: { email} });
-  try{
-
-
+export const fogot = (email) => async (dispatch) => {
+  dispatch({ type: USER_FOGOT_REQUEST, payload: { email } });
+  try {
     const data = await postData("auth/forgot-password", { email });
 
     dispatch({ type: USER_FOGOT_SUCCESS, payload: data.result });
-    console.log("gui gmail ok: ", data.result)
- 
-  }catch (error) {
+    console.log("gui gmail ok: ", data.result);
+  } catch (error) {
     console.log("xac nhan  loi FORGOT: ");
     dispatch({
       type: USER_FOGOT_FAIL,
@@ -80,17 +73,21 @@ export const fogot = (email) => async (dispatch) =>{
   }
 };
 
-export const verify = (email, code) => async (dispatch) =>{
-  dispatch({ type:  USER_VERIFY_REQUEST, payload: { email, code } });
-  try{
-    window.alert('fsdfsd')
-    console.log("xac nhan veryfy: ");
+export const verify = (email, code) => async (dispatch) => {
+  dispatch({ type: USER_VERIFY_REQUEST, payload: { email, code } });
+  try {
+    // window.alert('fsdfsd')
+    // console.log("xac nhan veryfy: ");
     const data = await postData("auth/verify-email", { email, code });
-    console.log("xac nhan thanh cong: ", data.code);
+    // console.log("xac nhan thanh cong: ", data.code);
     dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
- 
-  }catch (error) {
-    console.log("xac nhan  loi veryfy: ");
+    toast.success(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        サインアップに成功しました。
+      </h6>
+    );
+  } catch (error) {
+    // console.log("xac nhan  loi veryfy: ");
     dispatch({
       type: USER_VERIFY_FAIL,
       payload:
@@ -98,6 +95,11 @@ export const verify = (email, code) => async (dispatch) =>{
           ? error.response.data.message
           : error.message,
     });
+    toast.error(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        認証に失敗しました。
+      </h6>
+    );
   }
 };
 
@@ -105,46 +107,54 @@ export const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
     const data = await postData("auth/login", { email, password });
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    console.log("hieu ko loi: ", data);
-    console.log("hieu ko loi resulf: ", data.result);
-    
-
-    localStorage.setItem("userInfo", JSON.stringify({ result: data.result }));
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.result });
+    // console.log("hieu ko loi: ", data);
+    // console.log("hieu ko loi resulf: ", data.result);
+    toast.success(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        サインインに成功しました。
+      </h6>
+    );
+    localStorage.setItem("userInfo", JSON.stringify(data.result));
   } catch (error) {
-    console.log("hieu loi: ");
+    // console.log("hieu loi: ");
     dispatch({
-     
       type: USER_SIGNIN_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
     });
+    toast.error(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        サインインに失敗しました。
+      </h6>
+    );
   }
- 
 };
 
 export const register =
   ({ name, email, password }) =>
   async (dispatch) => {
-   
     dispatch({
       type: USER_REGISTER_REQUEST,
-      payload: { name,email,  password },
+      payload: { name, email, password },
     });
     try {
       const data = await postData("auth/register", {
-       
         name,
         email,
         password,
       });
-      console.log("dang ki ok: ");
-    
+      // console.log("dang ki ok: ");
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+      toast.info(
+        <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+          メールをチェックしてください。
+        </h6>
+      );
     } catch (error) {
-      console.log("dang ki loi: ");
+      // console.log("dang ki loi: ");
       dispatch({
         type: USER_REGISTER_FAIL,
         payload:
@@ -152,6 +162,11 @@ export const register =
             ? error.response.data.message
             : error.message,
       });
+      toast.error(
+        <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+          サインアップに失敗しました。
+        </h6>
+      );
     }
   };
 
@@ -161,8 +176,12 @@ export const getUserDetail = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const data = await getData("user/getProfile", userInfo.success.token);
-    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+    const data = await getData("auth/get-profile", userInfo.tokens);
+    const categories = await getData("category");
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: { user: data.result, categories: categories.result },
+    });
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -174,38 +193,32 @@ export const getUserDetail = () => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfile = (user) => async (dispatch, getState) => {
-  dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
+export const updateUserProfile = (dataUser) => async (dispatch, getState) => {
+  dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: dataUser });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
     const data = await putData(
-      "user/updateProfile",
-      user,
-      userInfo.success.token
+      `user/${userInfo.user.id}`,
+      dataUser,
+      userInfo.tokens
     );
+    // console.log(data);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+    toast.success(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        プロフィールを更新しました。
+      </h6>
+    );
     dispatch({
       type: USER_SIGNIN_SUCCESS,
-      payload: {
-        success: {
-          token: userInfo.success.token,
-          name: data.User_name,
-          image: data.User_image,
-        },
-      },
+      payload: { ...userInfo, user: data.result },
     });
 
     localStorage.setItem(
       "userInfo",
-      JSON.stringify({
-        success: {
-          token: userInfo.success.token,
-          name: data.User_name,
-          image: data.User_image,
-        },
-      })
+      JSON.stringify({ ...userInfo, user: data.result })
     );
   } catch (error) {
     const message =
@@ -216,6 +229,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_FAIL,
       payload: message,
     });
+    toast.error(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        プロフィールを更新できませんでした。
+      </h6>
+    );
   }
 };
 
@@ -291,6 +309,11 @@ export const userbuyCourse = (course_id) => async (dispatch, getState) => {
 
 export const signout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
+  // dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_SIGNOUT });
-  document.location.href = "/login";
+  toast.success(
+    <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+      サインアウトに成功しました。
+    </h6>
+  );
 };

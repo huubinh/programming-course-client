@@ -1,4 +1,4 @@
-import { getData } from "../../utils/fecthData";
+import { getData } from "../../utils/fetchData";
 import {
   TAG_ITEM_FAIL,
   TAG_ITEM_REQUEST,

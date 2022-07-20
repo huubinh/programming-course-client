@@ -13,9 +13,12 @@ header {
   justify-content: space-between;
   align-items: center;
   .logo-brand {
+    a:active {
+      color: #752ad1;
+    }
     img {
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
     }
     span {
       margin-left: 8px;
@@ -24,8 +27,8 @@ header {
   }
   .nav-user-action {
     img {
-      height: 35px;
-      width: 35px;
+      height: 38px;
+      width: 38px;
       border-radius: 50%;
     }
 
@@ -44,6 +47,13 @@ header {
         font-weight: 400;
         font-size: 14px;
       }
+
+      .dropdown:hover {
+        color: #752ad1;
+      }
+      .dropdown:active {
+        color: #ffffff;
+      }
     }
 
     .btn-login,
@@ -56,9 +66,10 @@ header {
       padding: 9px 10px;
       border-radius: 3px;
       display: inline-block;
-      color: #ffffff;
+
       &:hover {
-        border: 1px solid #f26c4f;
+        border: 1px solid #752ad1;
+        color: #752ad1;
       }
     }
   }

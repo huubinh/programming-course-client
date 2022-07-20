@@ -32,14 +32,13 @@ import {
   USER_RESET_REQUEST,
   USER_RESET_SUCCESS,
   USER_RESET_FAIL,
-
 } from "../constants/userContants";
 
 export const userResetReducer = (state = {}, action) => {
   switch (action.type) {
-    case  USER_RESET_REQUEST:
+    case USER_RESET_REQUEST:
       return { loading: true };
-    case  USER_RESET_SUCCESS:
+    case USER_RESET_SUCCESS:
       return { loading: false, resetPass: action.payload };
     case USER_RESET_FAIL:
       return { loading: false, error: action.payload };
@@ -50,9 +49,9 @@ export const userResetReducer = (state = {}, action) => {
 
 export const userFogotReducer = (state = {}, action) => {
   switch (action.type) {
-    case  USER_FOGOT_REQUEST:
+    case USER_FOGOT_REQUEST:
       return { loading: true };
-    case  USER_FOGOT_SUCCESS:
+    case USER_FOGOT_SUCCESS:
       return { loading: false, SuccessforgotPass: action.payload };
     case USER_FOGOT_FAIL:
       return { loading: false, error: action.payload };
@@ -65,7 +64,7 @@ export const userVerifyReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_VERIFY_REQUEST:
       return { loading: true };
-    case  USER_VERIFY_SUCCESS:
+    case USER_VERIFY_SUCCESS:
       return { loading: false, verifySuccess: action.payload };
     case USER_VERIFY_FAIL:
       return { loading: false, error: action.payload };
@@ -107,7 +106,7 @@ export const userDetailsReducer = (state = { loading: true }, action) => {
     case USER_DETAILS_REQUEST:
       return { loading: true };
     case USER_DETAILS_SUCCESS:
-      return { loading: false, user: action.payload };
+      return { loading: false, data: action.payload };
     case USER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     case USER_DETAILS_RESET:

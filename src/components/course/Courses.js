@@ -1,20 +1,32 @@
 import React from "react";
 import CourseItem from "./CourseItem";
 
-export default function CoursesSection({ courses, title }) {
+export default function CoursesSection({
+  categories,
+  courses,
+  number,
+  showAchievements,
+}) {
   return (
-    <div className="mb-2 mt-4">
-      <h4
-        className="text-uppercase"
-        style={{ fontSize: "20px", fontWeight: "bold" }}
-      >
-        {title}
-      </h4>
-      <div className="mt-2 row row-cols-1 row-cols-md-4 g-4">
-        {courses.map((item, index) => (
-          <CourseItem key={index} course={item} />
-        ))}
-      </div>
+    // <div className="mb-2">
+    <div
+      className={number === 4 ? "row g-4" : "row g-4 justify-content-center"}
+    >
+      {courses.map((item, index) => (
+        <div
+          className={
+            number === 4 ? "col-lg-3 col-md-4 col-sm-6 col-12 " : "col-lg-5"
+          }
+          key={index}
+        >
+          <CourseItem
+            course={item}
+            category={categories.find((i) => i.id === item.categoryId)}
+            showAchievements={showAchievements}
+          />
+        </div>
+      ))}
     </div>
+    // </div>
   );
 }

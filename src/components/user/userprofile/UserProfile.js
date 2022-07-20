@@ -11,42 +11,65 @@ import {
   USER_UPDATE_PROFILE_RESET,
   USER_DETAILS_RESET,
 } from "../../../redux/constants/userContants";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import CoursesSection from "../../course/Courses";
 
 export default function UserProfile(props) {
   const [dataUser, setDataUser] = useState({
-    User_name: "",
-    User_account: "",
-    User_phone: "",
-    User_DoB: "",
+    name: "",
+    avatar: "",
+    cover: "",
   });
   const [avatar, setAvatar] = useState("");
-  console.log(avatar);
+  // console.log(avatar);
 
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);
-  const { user, loading } = userDetails;
+  const { data, loading } = userDetails;
+
+  const uploadApi = "https://api.metahub.market/api/uploads";
+
+  useEffect(() => {dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: USER_UPDATE_PROFILE_RESET }); }, []);
 
   useEffect(() => {
-    if (!user) {
+    if (!data) {
+      dispatch({ type: USER_DETAILS_RESET });
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetail());
     } else {
       setDataUser({
-        User_name: user.information[0].User_name,
-        User_account: user.information[0].User_account,
-        User_phone: user.information[0].User_phone,
-        User_DoB: user.information[0].User_DoB,
+        name: data.user.user.name,
+        avatar: data.user.user.avatar,
+        cover: data.user.user.cover,
       });
     }
-  }, [dispatch, user]);
+  }, [dispatch, data]);
 
-  const handleChangeUser = (props) => (e) => {
-    setDataUser({ ...dataUser, [props]: e.target.value });
+  const avatarInputRef = useRef();
+  const coverPhotoInputRef = useRef();
+
+  const handleChangeAvatar = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    const res = await axios.post(uploadApi, formData);
+    dispatch(updateUserProfile({ ...dataUser, avatar: res.data.data }));
+    dispatch(getUserDetail());
   };
-  const fileInputRef = useRef();
 
-  const handleChangeAvatar = (e) => {
-    setAvatar(e.target.files[0]);
+  const handleChangeCoverPhoto = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    const res = await axios.post(uploadApi, formData);
+    dispatch(updateUserProfile({ ...dataUser, cover: res.data.data }));
+    dispatch(getUserDetail());
+  };
+
+  const handleChangeName = (e) => {
+    setDataUser({ ...dataUser, name: e.target.value });
   };
 
   const imageUpLoad = async (image) => {
@@ -63,174 +86,366 @@ export default function UserProfile(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let media;
-    if (avatar !== "") media = await imageUpLoad(avatar);
-    dispatch(
-      updateUserProfile({
-        User_name: dataUser.User_name,
-        User_DoB: dataUser.User_DoB,
-        User_image: media ? media : user.information[0].User_image,
-      })
-    );
-    dispatch({ type: USER_DETAILS_RESET });
+    // let media;
+    // if (avatar !== "") media = await imageUpLoad(avatar);
+    // dispatch(
+    //   updateUserProfile({
+    //     name: dataUser.name,
+    //     // User_DoB: dataUser.User_DoB,
+    //     // User_image: media ? media : user.information[0].User_image,
+    //   })
+    // );
+    // dispatch({ type: USER_DETAILS_RESET });
+    dispatch(updateUserProfile(dataUser));
+    dispatch(getUserDetail());
+  };
+
+  const [searchName, setSearchName] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
+  const [search, setSearch] = useState({ name: "", category: "" });
+
+  const handleSearch = () => {
+    setSearch({ name: searchName, category: searchCategory });
   };
 
   return (
     <>
       {loading && <LoadingPage />}
-      {user && (
-        <div className="user-profile mt-5">
-          <div className="row">
-            <div className="col-4">
-              <div className="left-information">
-                <div className="change-avatar">
-                  <img
-                    src={
-                      avatar !== ""
-                        ? URL.createObjectURL(avatar)
-                        : user.information[0].User_image
-                    }
-                    className="img-fluid image-avatar"
-                    alt="avatar"
-                  ></img>
-                  <div className="text-center btn-upload-avatar">
-                    <button
-                      onClick={() => fileInputRef.current.click()}
-                      className="btn btn-info"
+      {data && (
+        <div
+          style={{
+            minHeight: "100vh",
+            paddingTop: "60px",
+          }}
+          className="user-profile"
+        >
+          <img
+            src={data.user.user.cover}
+            alt="course"
+            style={{
+              position: "fixed",
+              width: "100%",
+              height: "100%",
+              opacity: "0.8",
+              zIndex: -1,
+            }}
+          />
+          <div className="container">
+            <div className="row">
+              <div className="col-4">
+                <div
+                  className="card left-information"
+                  style={{
+                    width: "100%%",
+                    height: "auto",
+                    padding: "20px",
+                    marginTop: "60px",
+                  }}
+                >
+                  <div className="change-avatar">
+                    <img
+                      src={
+                        avatar !== ""
+                          ? URL.createObjectURL(avatar)
+                          : data.user.user.avatar
+                      }
+                      className="img-fluid image-avatar"
+                      alt="avatar"
+                    ></img>
+                    <div className="row">
+                      <div className="col-6">
+                        <div className="text-center btn-upload">
+                          <button
+                            onClick={() => avatarInputRef.current.click()}
+                            className="btn btn-primary btn-sm "
+                          >
+                            アバターを編集
+                          </button>
+                          <input
+                            onChange={handleChangeAvatar}
+                            multiple={false}
+                            ref={avatarInputRef}
+                            type="file"
+                            hidden
+                          />
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="text-center btn-upload">
+                          <button
+                            onClick={() => coverPhotoInputRef.current.click()}
+                            className="btn btn-success btn-sm"
+                          >
+                            カバー写真を編集
+                          </button>
+                          <input
+                            onChange={handleChangeCoverPhoto}
+                            multiple={false}
+                            ref={coverPhotoInputRef}
+                            type="file"
+                            hidden
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="list-group list-menu-profile"
+                    id="list-tab"
+                    role="tablist"
+                  >
+                    <a
+                      className="list-group-item list-group-item-action active"
+                      id="list-profile-list"
+                      data-bs-toggle="list"
+                      href="#list-profile"
+                      role="tab"
+                      aria-controls="list-profile"
                     >
-                      Thay đổi ảnh
-                    </button>
-                    <input
-                      onChange={handleChangeAvatar}
-                      multiple={false}
-                      ref={fileInputRef}
-                      type="file"
-                      hidden
-                    />
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                      マイプロフィール
+                    </a>
+                    <a
+                      className="list-group-item list-group-item-action"
+                      id="list-course-list"
+                      data-bs-toggle="list"
+                      href="#list-course"
+                      role="tab"
+                      aria-controls="list-course"
+                    >
+                      <i className="fa fa-bookmark" aria-hidden="true"></i>
+                      マイコース
+                    </a>
+                    <a
+                      className="list-group-item list-group-item-action"
+                      id="list-achievements-list"
+                      data-bs-toggle="list"
+                      href="#list-achievements"
+                      role="tab"
+                      aria-controls="list-achievements"
+                    >
+                      <i
+                        className="fa fa-star"
+                        aria-hidden="true"
+                        style={{ marginLeft: "-2px" }}
+                      ></i>
+                      成績
+                    </a>
                   </div>
                 </div>
-                <div
-                  className="list-group list-menu-profile"
-                  id="list-tab"
-                  role="tablist"
-                >
-                  <a
-                    className="list-group-item list-group-item-action active"
-                    id="list-home-list"
-                    data-bs-toggle="list"
-                    href="#list-home"
-                    role="tab"
-                    aria-controls="list-home"
-                  >
-                    <i className="fa fa-user" aria-hidden="true"></i>
-                    Thông tin cá nhân
-                  </a>
-                  <a
-                    className="list-group-item list-group-item-action"
-                    id="list-profile-list"
-                    data-bs-toggle="list"
-                    href="#list-profile"
-                    role="tab"
-                    aria-controls="list-profile"
-                  >
-                    <i className="fa fa-unlock-alt" aria-hidden="true"></i>
-                    Thay đổi mật khẩu
-                  </a>
-                  <a
-                    className="list-group-item list-group-item-action"
-                    id="list-settings-list"
-                    data-bs-toggle="list"
-                    href="#list-settings"
-                    role="tab"
-                    aria-controls="list-settings"
-                  >
-                    <i className="fa fa-lock" aria-hidden="true"></i>
-                    Khoá tài khoản
-                  </a>
-                </div>
               </div>
-            </div>
-            <div className="col-8">
-              <div
-                className="tab-content right-information"
-                id="nav-tabContent"
-              >
+              <div className="col-8">
                 <div
-                  className="tab-pane fade show active information-details-user"
-                  id="list-home"
-                  role="tabpanel"
-                  aria-labelledby="list-home-list"
+                  className="card"
+                  style={{
+                    width: "100%%",
+                    height: "auto",
+                    padding: "36px",
+                    marginTop: "60px",
+                  }}
                 >
-                  <h3 className="text-center text-title">Thông tin cá nhân</h3>
-                  <form
-                    className="form-edit-information"
-                    onSubmit={handleSubmit}
+                  <div
+                    className="tab-content right-information"
+                    id="nav-tabContent"
                   >
-                    <div className="mb-3">
-                      <label className="form-label">Họ và tên</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={dataUser["User_name"]}
-                        onChange={handleChangeUser("User_name")}
-                      />
+                    <div
+                      className="tab-pane fade show active information-details-user"
+                      id="list-profile"
+                      role="tabpanel"
+                      aria-labelledby="list-profile-list"
+                    >
+                      <h3 className="text-center text-title">
+                        マイプロフィール
+                      </h3>
+                      <form
+                        className="form-edit-information"
+                        onSubmit={handleSubmit}
+                      >
+                        <div className="mb-3">
+                          <label className="form-label">名前</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={dataUser["name"]}
+                            onChange={handleChangeName}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">メール</label>
+                          <input
+                            disabled
+                            type="email"
+                            className="form-control"
+                            value={data.user.user.email}
+                          />
+                        </div>
+                        <div className="mt-5 btn-save-information d-flex justify-content-center">
+                          <button
+                            type="submit"
+                            size="lg"
+                            className="btn btn-danger"
+                          >
+                            編集
+                          </button>
+                        </div>
+                      </form>
                     </div>
-                    <div className="mb-3">
-                      <label className="form-label">Email</label>
-                      <input
-                        disabled
-                        type="email"
-                        className="form-control"
-                        value={dataUser["User_account"]}
-                        onChange={handleChangeUser("User_account")}
-                      />
+                    <div
+                      className="tab-pane fade"
+                      id="list-course"
+                      role="tabpanel"
+                      aria-labelledby="list-course-list"
+                    >
+                      <div className="row justify-content-center">
+                        <div className="col-12 mb-2 text-center">
+                          <h3>マイコース</h3>
+                        </div>
+                        <div className="col-10 d-flex justify-content-end">
+                          <Form.Control
+                            placeholder="キーワード検索"
+                            value={searchName}
+                            onChange={(e) => setSearchName(e.target.value)}
+                            onKeyUp={(e) => {
+                              if (e.key === "Enter") {
+                                handleSearch();
+                              }
+                            }}
+                            style={{ width: "268px" }}
+                          />
+
+                          <Form.Select
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            style={{ width: "200px", marginLeft: "23px" }}
+                          >
+                            <option value="">全てのカテゴリー</option>
+                            {data.categories.map((item) => (
+                              <option value={item.id} key={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </Form.Select>
+
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              handleSearch();
+                            }}
+                            style={{ width: "50px", marginLeft: "20px" }}
+                          >
+                            <i className="fa fa-search"></i>
+                          </Button>
+                        </div>
+                      </div>
+                      <div style={{ marginTop: "30px" }}>
+                        <div className="mt-3">
+                          <CoursesSection
+                            categories={data.categories}
+                            courses={data.user.courseOfUser
+                              .filter(
+                                (item) =>
+                                  !search.name ||
+                                  item.name
+                                    .toLowerCase()
+                                    .includes(search.name.toLowerCase())
+                              )
+                              .filter(
+                                (item) =>
+                                  !search.category ||
+                                  item.categoryId === search.category
+                              )}
+                            number={2}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="mb-3">
-                      <label className="form-label">Số điện thoại</label>
-                      <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        value={dataUser["User_phone"]}
-                        onChange={handleChangeUser("User_phone")}
-                      />
+                    <div
+                      className="tab-pane fade"
+                      id="list-achievements"
+                      role="tabpanel"
+                      aria-labelledby="list-achievements-list"
+                    >
+                      <div className="row justify-content-center">
+                        <div className="col-12 mb-2 text-center">
+                          <h3>成績</h3>
+                        </div>
+                        <div className="col-10 d-flex justify-content-end">
+                          <Form.Control
+                            placeholder="キーワード検索"
+                            value={searchName}
+                            onChange={(e) => setSearchName(e.target.value)}
+                            onKeyUp={(e) => {
+                              if (e.key === "Enter") {
+                                handleSearch();
+                              }
+                            }}
+                            style={{ width: "268px" }}
+                          />
+
+                          <Form.Select
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            style={{ width: "200px", marginLeft: "23px" }}
+                          >
+                            <option value="">全てのカテゴリー</option>
+                            {data.categories.map((item) => (
+                              <option value={item.id} key={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </Form.Select>
+
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              handleSearch();
+                            }}
+                            style={{ width: "50px", marginLeft: "20px" }}
+                          >
+                            <i className="fa fa-search"></i>
+                          </Button>
+                        </div>
+                      </div>
+                      <div style={{ marginTop: "30px" }}>
+                        <div className="mt-3">
+                          <CoursesSection
+                            categories={data.categories}
+                            courses={data.user.courseOfUser
+                              .filter(
+                                (item) =>
+                                  !search.name ||
+                                  item.name
+                                    .toLowerCase()
+                                    .includes(search.name.toLowerCase())
+                              )
+                              .filter(
+                                (item) =>
+                                  !search.category ||
+                                  item.categoryId === search.category
+                              )
+                              .filter(
+                                (item) => typeof item.achievement === "number"
+                              )}
+                            number={2}
+                            showAchievements={true}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="mb-3">
-                      <label className="form-label">Ngày sinh</label>
-                      <input
-                        type="date"
-                        className="form-control"
-                        value={dataUser["User_DoB"]}
-                        onChange={handleChangeUser("User_DoB")}
-                      />
-                    </div>
-                    <div className="mt-5 btn-save-information">
-                      <button type="submit" className="btn btn-success ">
-                        Lưu lại
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="list-profile"
-                  role="tabpanel"
-                  aria-labelledby="list-profile-list"
-                >
-                  ...
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="list-settings"
-                  role="tabpanel"
-                  aria-labelledby="list-settings-list"
-                >
-                  ...
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        //       <div className="user-profile mt-5">
+        // <div className="row">
+        //   <div className="col-4">
+        //     <div className="left-information"></div>
+        //   </div>
+        //   <div className="col-8"></div>
+        // </div>
       )}
     </>
   );

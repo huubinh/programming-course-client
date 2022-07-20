@@ -24,10 +24,8 @@ export default function Login(props) {
   };
 
   const handleSubmit = (e) => {
-   
     e.preventDefault();
     dispatch(signin(email, password));
-
   };
 
   useEffect(() => {
@@ -38,29 +36,30 @@ export default function Login(props) {
   return (
     <div className="account-form">
       <div className="text-center mb-3">
-        <span className="">
+        <span className="logo-brand">
           <Link to="/">
-            <img src="https://id.unica.vn/images/logo.png" alt="logo" />
+            <img src="/logo.png" alt="logo" />
+            <span>XCODE</span>
           </Link>
         </span>
       </div>
       <form className="wrap-form" onSubmit={handleSubmit}>
-        <h3>Đăng nhập</h3>
-        <div className="mb-4">
+        <h3 style={{ fontWeight: "bold" }}>サインイン</h3>
+        <div className="mt-3 mb-4">
           <input
             type="email"
             className="form-control"
-            placeholder="Nhập địa chỉ email"
+            placeholder="メール"
             name="email"
             value={email}
             onChange={handleChangeInput}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-3">
           <input
             type="password"
             className="form-control"
-            placeholder="Nhập mật khẩu"
+            placeholder="パスワード"
             name="password"
             value={password}
             onChange={handleChangeInput}
@@ -68,15 +67,17 @@ export default function Login(props) {
         </div>
         <div className="mb-4 pt-4">
           <button className="btn-account-submit" type="submit">
-            Đăng nhập
+            サインイン
           </button>
         </div>
 
         <div className="text center">
-          <span>Bạn chưa có tài khoản?</span>
-          <Link to="/register">Đăng ký mới</Link>
+          {/* <span>新しいユーザー?</span> */}
+          <Link to="/register">サインアップ</Link>
           <br />
-          <Link to="/veri">Quên mật khẩu</Link>
+          <div style={{ marginTop: "16px" }}>
+            <Link to="/veri">パースワードを忘れた？</Link>
+          </div>
         </div>
       </form>
     </div>

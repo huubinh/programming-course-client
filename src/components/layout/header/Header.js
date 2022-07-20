@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { signout , reset} from "../../../redux/actions/userActions";
+import { signout, reset } from "../../../redux/actions/userActions";
 import { Button, Modal } from "antd";
-
-import "./header.scss";
 import "antd/dist/antd.css";
+import { Link, useNavigate } from "react-router-dom";
+import "./header.scss";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -14,11 +14,14 @@ export default function Header() {
   const userReset = useSelector((state) => state.resetPasss);
   console.log("user: ", userSignin);
   const { userInfo } = userSignin;
-  const {resetPass} = userReset;
-  const [ pass, setPass1 ] = useState("");
+  const { resetPass } = userReset;
+  const [pass, setPass1] = useState("");
+  // console.log("user: ", userSignin);
+  const navigate = useNavigate();
 
   const signoutHandler = () => {
     dispatch(signout());
+    navigate("/login");
   };
   const [visible, setVisible] = useState(false);
 
@@ -29,7 +32,7 @@ export default function Header() {
 
   const doiPass = (e) => {
     e.preventDefault();
-    dispatch(reset(pass, userInfo.result.tokens));
+    dispatch(reset(pass, userInfo.tokens));
     setVisible(false);
   };
 
@@ -39,29 +42,30 @@ export default function Header() {
         <div className="header-wrapper">
           <div className="logo-brand">
             <Link to="/">
-              <img
-                src="https://cdn-icons.flaticon.com/png/512/2888/premium/2888414.png?token=exp=1657596224~hmac=6311dba77e1bee83aad7985800059c9e"
-                alt="logo"
-              />
+              <img src="/logo.png" alt="logo" />
               <span>XCODE</span>
             </Link>
           </div>
 
           {userInfo !== null ? (
-         
             <div className="nav-user-action">
-                 {console.log("token", userInfo.result.tokens)}
-              <img src={userInfo.result.user.avatar} alt="avatar" />
+              {console.log("token", userInfo.tokens)}
+              <img src={userInfo.user.avatar} alt="avatar" />
 
               <Dropdown className="d-inline mx-2 cus-dropdown">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
-                  {userInfo.result.user.email}
+                  <span className="dropdown" style={{ marginRight: "6px" }}>
+                    {userInfo.user.name}
+                  </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link to="/user/profile">プロフィール</Link>
+                  <Dropdown.Item
+                    onClick={() => navigate("/user/profile")}
+                    className="dropdown"
+                  >
+                    プロフィール
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={signoutHandler}>
+                  <Dropdown.Item onClick={signoutHandler} className="dropdown">
                     サインアウト
                   </Dropdown.Item>
                   <Dropdown.Item>
