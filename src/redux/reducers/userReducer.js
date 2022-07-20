@@ -26,7 +26,39 @@ import {
   USER_VERIFY_REQUEST,
   USER_VERIFY_SUCCESS,
   USER_VERIFY_FAIL,
+  USER_FOGOT_REQUEST,
+  USER_FOGOT_SUCCESS,
+  USER_FOGOT_FAIL,
+  USER_RESET_REQUEST,
+  USER_RESET_SUCCESS,
+  USER_RESET_FAIL,
 } from "../constants/userContants";
+
+export const userResetReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_RESET_REQUEST:
+      return { loading: true };
+    case USER_RESET_SUCCESS:
+      return { loading: false, resetPass: action.payload };
+    case USER_RESET_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userFogotReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_FOGOT_REQUEST:
+      return { loading: true };
+    case USER_FOGOT_SUCCESS:
+      return { loading: false, SuccessforgotPass: action.payload };
+    case USER_FOGOT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 export const userVerifyReducer = (state = {}, action) => {
   switch (action.type) {

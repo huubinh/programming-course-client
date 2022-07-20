@@ -16,6 +16,8 @@ import {
   userSigninReducer,
   userUpdateProfileReducer,
   userVerifyReducer,
+  userFogotReducer,
+  userResetReducer,
 } from "./reducers/userReducer";
 
 const initialState = {
@@ -27,6 +29,8 @@ const initialState = {
 };
 
 const reducer = combineReducers({
+  resetPasss: userResetReducer,
+  fogotPass: userFogotReducer,
   homeList: homeReducer,
   categoryItem: categoryItemReducer,
   categoryList: categoryListReducer,

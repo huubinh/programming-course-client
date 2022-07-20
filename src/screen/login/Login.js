@@ -76,7 +76,7 @@ export default function Login(props) {
           <Link to="/register">サインアップ</Link>
           <br />
           <div style={{ marginTop: "16px" }}>
-            <Link to="/">パースワードを忘れた？</Link>
+            <Link to="/veri">パースワードを忘れた？</Link>
           </div>
         </div>
       </form>

@@ -3,15 +3,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { verify} from "../../redux/actions/userActions";
+import { fogot} from "../../redux/actions/userActions";
+import "./verifyEmail.scss";
 
+export default function VeriEmail() {
 
-export default function VeriEmail(props) {
-
-  const userVery = useSelector((state) => state.userVerify);
- 
-  const {verifySuccess} = userVery;
-  const [code, setCode] = useState("");
+  const userForgot = useSelector((state) => state.fogotPass);
+  const { SuccessforgotPass } = userForgot;
+  const [code, setCode] = useState(true);
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
 //   const navigate = useNavigate();
@@ -21,25 +22,26 @@ export default function VeriEmail(props) {
 
   const handleInputVery = (e) => {
       console.log("data: ", e.target.value);
-      setCode(e.target.value);
+      setEmail(e.target.value);
   };
   const handleSubmitVery = (e)=>{
       e.preventDefault();
-    console.log("submit: ", props.email, code);
-    dispatch(verify(props.email, code));
+  
+    dispatch(fogot(email));
+     
+   
   }
 
  
-  // useEffect(() => {
-  //   setVerify(true);
-  //   if (verifySuccess) {
-  //     console.log("xac nhan ok: ", verifySuccess);
-  //     // navigate("/login", { replace: true });
-  //   }
-  //   else{
-  //     console.log("loi xac nhan");
-  //   }
-  // }, [ verifySuccess]);
+  useEffect(() => {
+    
+    if (SuccessforgotPass) {
+      console.log("gui ve: ", SuccessforgotPass);
+      navigate("/login", { replace: true });
+    }
+   
+  
+  }, [ SuccessforgotPass ]);
   // useEffect(() => {
   //   console.log("vao r ma");
   //   if (success) {
@@ -50,19 +52,48 @@ export default function VeriEmail(props) {
   //     console.log("ko vao : ", success);
   //   }
   // },  [success]);
-  console.log("submit: ", props.email)
+
 
   return (
-   <div>
-   
-   
-      
-      
-      
-      
-   
-     
-  </div>
+    <div>
+      {code ? (
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-12 text-center">
+          <form className="wrap-form" >
+          <h3>nhap tai khoan gmail </h3>
+          <div className="mb-3">
+          <input
+                type="text"
+                className="form-control"
+                placeholder="Nhập gmail"
+                name="text"
+                onChange={handleInputVery}
+          />
+          </div>
+          <div className="mb-3 pt-4">
+          <button className="btn-account-submit" onClick={handleSubmitVery}>
+                xac nhan
+          </button>
+          </div>
+          
+          
+          </form>
+          </div>
+        </div>
+       
+      </div>
+        
+
+        
+      ) :(<div>
+          <h1>khong ton tai tai khoan email, hoac tai khoan chua dc dang ki</h1>
+          <Link to="/login">quay lai</Link>
+        </div>)
+        }
+    </div>
+  
+  
  
   );
 }
