@@ -76,7 +76,7 @@ export default function Login(props) {
           <span>Bạn chưa có tài khoản?</span>
           <Link to="/register">Đăng ký mới</Link>
           <br />
-          <Link to="/">Quên mật khẩu</Link>
+          <Link to="/veri">Quên mật khẩu</Link>
         </div>
       </form>
     </div>

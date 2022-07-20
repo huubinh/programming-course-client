@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { signout } from "../../../redux/actions/userActions";
+import { signout , reset} from "../../../redux/actions/userActions";
+import { Button, Modal } from "antd";
+
 import "./header.scss";
+import "antd/dist/antd.css";
 
 export default function Header() {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
-  console.log("user: ",userSignin)
+  const userReset = useSelector((state) => state.resetPasss);
+  console.log("user: ", userSignin);
   const { userInfo } = userSignin;
+  const {resetPass} = userReset;
+  const [ pass, setPass1 ] = useState("");
 
   const signoutHandler = () => {
     dispatch(signout());
   };
+  const [visible, setVisible] = useState(false);
 
+  const handlePass = (e) => {
+    console.log(e.target.value);
+    setPass1(e.target.value);
+  };
+
+  const doiPass = (e) => {
+    e.preventDefault();
+    dispatch(reset(pass, userInfo.result.tokens));
+    setVisible(false);
+  };
 
   return (
     <header>
@@ -29,10 +46,11 @@ export default function Header() {
               <span>XCODE</span>
             </Link>
           </div>
-          
+
           {userInfo !== null ? (
+         
             <div className="nav-user-action">
-            
+                 {console.log("token", userInfo.result.tokens)}
               <img src={userInfo.result.user.avatar} alt="avatar" />
 
               <Dropdown className="d-inline mx-2 cus-dropdown">
@@ -45,6 +63,32 @@ export default function Header() {
                   </Dropdown.Item>
                   <Dropdown.Item onClick={signoutHandler}>
                     サインアウト
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Button type="primary" onClick={() => setVisible(true)}>
+                      reset pass
+                    </Button>
+                    <Modal
+                      title="reset mk"
+                      centered
+                      visible={visible}
+                      // onOk={doiPass}
+                      // onCancel={() => setVisible(false)}
+                      width={1000}
+                    >
+                      <div className="mb-3">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Nhập mat khau"
+                          name="text"
+                          onChange={handlePass}
+                        />
+                      </div>
+                      <div>
+                        <button onClick={doiPass}>ok</button>
+                      </div>
+                    </Modal>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

@@ -25,8 +25,60 @@ import {
   USER_VERIFY_REQUEST,
   USER_VERIFY_SUCCESS,
   USER_VERIFY_FAIL,
+  USER_FOGOT_REQUEST,
+  USER_FOGOT_SUCCESS,
+  USER_FOGOT_FAIL,
+  USER_RESET_REQUEST,
+  USER_RESET_SUCCESS,
+  USER_RESET_FAIL,
+
+
 } from "../constants/userContants";
 
+
+export const reset = (password, token) => async (dispatch) =>{
+  dispatch({ type:  USER_RESET_REQUEST, payload: { password} });
+  try{
+    window.alert('co chay vao reset');
+
+    const data = await postData("auth/reset-password", { password }, token);
+
+    dispatch({ type: USER_RESET_SUCCESS, payload: data });
+    console.log("reset ok: ", data)
+ 
+  }catch (error) {
+    console.log("xac nhan  loi reset: ");
+    dispatch({
+      type: USER_RESET_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const fogot = (email) => async (dispatch) =>{
+  dispatch({ type:  USER_FOGOT_REQUEST, payload: { email} });
+  try{
+    window.alert('co chay vao fogot');
+
+    const data = await postData("auth/forgot-password", { email });
+
+    dispatch({ type: USER_FOGOT_SUCCESS, payload: data.result });
+    console.log("gui gmail ok: ", data.result)
+ 
+  }catch (error) {
+    console.log("xac nhan  loi FORGOT: ");
+    dispatch({
+      type: USER_FOGOT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const verify = (email, code) => async (dispatch) =>{
   dispatch({ type:  USER_VERIFY_REQUEST, payload: { email, code } });
