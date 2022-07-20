@@ -9,6 +9,7 @@ import LoadingPage from "../../components/Loading/Loading";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/fetchData";
+import { toast } from "react-toastify";
 
 export default function CourseDetails() {
   const dispatch = useDispatch();
@@ -26,9 +27,26 @@ export default function CourseDetails() {
 
   const [answers, setAnswers] = useState([]);
   const handleSubmit = () => {
-    postData(`course/${id}/question/answer`, { answers }, userInfo.tokens).then(
-      navigate(`/course/${id}`)
-    );
+    postData(`course/${id}/question/answer`, { answers }, userInfo.tokens)
+      .then(() => {
+        toast.success(
+          <h6
+            style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}
+          >
+            答えをサブミットしました。
+          </h6>
+        );
+        navigate(`/course/${id}`);
+      })
+      .catch(() => {
+        toast.error(
+          <h6
+            style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}
+          >
+            答えをサブミットできませんでした。
+          </h6>
+        );
+      });
   };
   const handleChoice = (index, choice) => {
     setAnswers((prevAnswers) => {

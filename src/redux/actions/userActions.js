@@ -10,6 +10,7 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_DETAILS_RESET,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
@@ -26,16 +27,22 @@ import {
   USER_VERIFY_SUCCESS,
   USER_VERIFY_FAIL,
 } from "../constants/userContants";
+import { toast } from "react-toastify";
 
 export const verify = (email, code) => async (dispatch) => {
   dispatch({ type: USER_VERIFY_REQUEST, payload: { email, code } });
   try {
-    console.log("xac nhan veryfy: ");
+    // console.log("xac nhan veryfy: ");
     const data = await postData("auth/verify-email", { email, code });
-    console.log("xac nhan thanh cong: ", data.code);
+    // console.log("xac nhan thanh cong: ", data.code);
     dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
+    toast.success(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        サインアップに成功しました。
+      </h6>
+    );
   } catch (error) {
-    console.log("xac nhan  loi veryfy: ");
+    // console.log("xac nhan  loi veryfy: ");
     dispatch({
       type: USER_VERIFY_FAIL,
       payload:
@@ -43,6 +50,11 @@ export const verify = (email, code) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     });
+    toast.error(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        認証に失敗しました。
+      </h6>
+    );
   }
 };
 
@@ -53,7 +65,11 @@ export const signin = (email, password) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.result });
     // console.log("hieu ko loi: ", data);
     // console.log("hieu ko loi resulf: ", data.result);
-
+    toast.success(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        サインインに成功しました。
+      </h6>
+    );
     localStorage.setItem("userInfo", JSON.stringify(data.result));
   } catch (error) {
     // console.log("hieu loi: ");
@@ -64,6 +80,11 @@ export const signin = (email, password) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     });
+    toast.error(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        サインインに失敗しました。
+      </h6>
+    );
   }
 };
 
@@ -80,11 +101,15 @@ export const register =
         email,
         password,
       });
-      console.log("dang ki ok: ");
-
+      // console.log("dang ki ok: ");
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+      toast.info(
+        <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+          メールをチェックしてください。
+        </h6>
+      );
     } catch (error) {
-      console.log("dang ki loi: ");
+      // console.log("dang ki loi: ");
       dispatch({
         type: USER_REGISTER_FAIL,
         payload:
@@ -92,6 +117,11 @@ export const register =
             ? error.response.data.message
             : error.message,
       });
+      toast.error(
+        <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+          サインアップに失敗しました。
+        </h6>
+      );
     }
   };
 
@@ -129,8 +159,13 @@ export const updateUserProfile = (dataUser) => async (dispatch, getState) => {
       dataUser,
       userInfo.tokens
     );
-    console.log(data);
+    // console.log(data);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+    toast.success(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        プロフィールを更新しました。
+      </h6>
+    );
     dispatch({
       type: USER_SIGNIN_SUCCESS,
       payload: { ...userInfo, user: data.result },
@@ -149,6 +184,11 @@ export const updateUserProfile = (dataUser) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_FAIL,
       payload: message,
     });
+    toast.error(
+      <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+        プロフィールを更新できませんでした。
+      </h6>
+    );
   }
 };
 
@@ -224,6 +264,11 @@ export const userbuyCourse = (course_id) => async (dispatch, getState) => {
 
 export const signout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
+  // dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_SIGNOUT });
-  document.location.href = "/login";
+  toast.success(
+    <h6 style={{ marginTop: "9px", marginLeft: "5px", fontWeight: "bold" }}>
+      サインアウトに成功しました。
+    </h6>
+  );
 };

@@ -30,8 +30,12 @@ export default function UserProfile(props) {
 
   const uploadApi = "https://api.metahub.market/api/uploads";
 
+  useEffect(() => {dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: USER_UPDATE_PROFILE_RESET }); }, []);
+
   useEffect(() => {
     if (!data) {
+      dispatch({ type: USER_DETAILS_RESET });
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetail());
     } else {
@@ -363,7 +367,7 @@ export default function UserProfile(props) {
                     >
                       <div className="row justify-content-center">
                         <div className="col-12 mb-2 text-center">
-                          <h3>マイコース</h3>
+                          <h3>成績</h3>
                         </div>
                         <div className="col-10 d-flex justify-content-end">
                           <Form.Control

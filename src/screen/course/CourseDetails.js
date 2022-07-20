@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import CourseContent from "../../components/courseDetails/courseInfo/courseContent/CourseContent";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/fetchData";
+import { toast } from "react-toastify";
 
 export default function CourseDetails() {
   const dispatch = useDispatch();
@@ -84,7 +85,34 @@ export default function CourseDetails() {
                             "/attendance/add",
                             { userId: userInfo.user.id, courseId: id },
                             userInfo.tokens
-                          ).then(navigate(`/course/${id}/lessons`));
+                          )
+                            .then(() => {
+                              toast.success(
+                                <h6
+                                  style={{
+                                    marginTop: "9px",
+                                    marginLeft: "5px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  コースに参加しました。
+                                </h6>
+                              );
+                              navigate(`/course/${id}/lessons`);
+                            })
+                            .catch(() => {
+                              toast.error(
+                                <h6
+                                  style={{
+                                    marginTop: "9px",
+                                    marginLeft: "5px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  コースに参加できませんでした。
+                                </h6>
+                              );
+                            });
                         } else navigate("/login");
                       }}
                       style={{ width: "175px" }}
@@ -107,7 +135,7 @@ export default function CourseDetails() {
               {data.attended && (
                 <>
                   <h5 className="mb-3 mt-4" style={{ marginLeft: "-4px" }}>
-                    クイズ
+                    ファイナルクイズ
                   </h5>
                   <div className="row align-items-center">
                     <div className="col-3">
@@ -123,8 +151,8 @@ export default function CourseDetails() {
                         クイズに答える
                       </Button>
                     </div>
-                    <div className="col-9">
-                      <h5 style={{ marginLeft: "-70px" }}>
+                    <div className="col-12">
+                      <h5 className="mt-3">
                         成績：
                         {typeof data.achievement === "number" ? (
                           <span style={{ color: "#752ad1" }}>

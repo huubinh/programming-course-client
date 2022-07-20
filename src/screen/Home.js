@@ -8,7 +8,7 @@ import LoadingPage from "../components/Loading/Loading";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
+import { toast } from "react-toastify";
 export default function Home() {
   const dispatch = useDispatch();
   const homeList = useSelector((state) => state.homeList);

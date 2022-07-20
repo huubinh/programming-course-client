@@ -4,18 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signout } from "../../../redux/actions/userActions";
 import "./header.scss";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
   // console.log("user: ", userSignin);
   const { userInfo } = userSignin;
+  const navigate = useNavigate();
 
   const signoutHandler = () => {
     dispatch(signout());
+    navigate("/login");
   };
 
-  const navigate = useNavigate();
   return (
     <header>
       <div className="container">

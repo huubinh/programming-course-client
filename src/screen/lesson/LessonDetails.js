@@ -129,7 +129,7 @@ export default function CourseDetails() {
                     )}
                   </div>
                   <h5 className="mb-3 mt-4" style={{ marginLeft: "-4px" }}>
-                    クイズ
+                    ファイナルクイズ
                   </h5>
                   <Button
                     variant="success"
@@ -142,7 +142,6 @@ export default function CourseDetails() {
                   >
                     クイズに答える
                   </Button>
-
                   <h5 className="mt-4">
                     成績：
                     {typeof data.achievement === "number" ? (
@@ -150,7 +149,7 @@ export default function CourseDetails() {
                         {data.achievement}/10
                       </span>
                     ) : (
-                      "まだありません。"
+                      "ありません。"
                     )}
                   </h5>
                 </div>
